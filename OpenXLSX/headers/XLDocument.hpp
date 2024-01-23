@@ -119,7 +119,7 @@ namespace OpenXLSX
         /**
          * @brief Constructor. The default constructor with no arguments.
          */
-        explicit XLDocument(const IZipArchive& zipArchive = XLZipArchive());
+        explicit XLDocument();
 
         /**
          * @brief Constructor. An alternative constructor, taking the path to the .xlsx file as an argument.
