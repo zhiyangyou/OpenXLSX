@@ -675,13 +675,13 @@ namespace OpenXLSX
          * @brief Method to get the type of the sheet.
          * @return An XLSheetType enum object with the sheet type.
          */
-        template<
+    /*    template<
             typename SheetType,
             typename std::enable_if<std::is_same_v<SheetType, XLWorksheet> || std::is_same_v<SheetType, XLChartsheet>>::type* = nullptr>
         bool isType() const
         {
             return std::holds_alternative<SheetType>(m_sheet);
-        }
+        }*/
 
         /**
          * @brief Method for cloning the sheet.
@@ -696,21 +696,21 @@ namespace OpenXLSX
          * @tparam T
          * @return
          */
-        template<typename T, typename std::enable_if<std::is_same_v<T, XLWorksheet> || std::is_same_v<T, XLChartsheet>>::type* = nullptr>
-        T get() const
-        {
-            try {
-                if constexpr (std::is_same<T, XLWorksheet>::value)
-                    return std::get<XLWorksheet>(m_sheet);
+        //template<typename T, typename std::enable_if<std::is_same_v<T, XLWorksheet> || std::is_same_v<T, XLChartsheet>>::type* = nullptr>
+        //T get() const
+        //{
+        //    try {
+        //        if constexpr (std::is_same<T, XLWorksheet>::value)
+        //            return std::get<XLWorksheet>(m_sheet);
 
-                else if constexpr (std::is_same<T, XLChartsheet>::value)
-                    return std::get<XLChartsheet>(m_sheet);
-            }
+        //        else if constexpr (std::is_same<T, XLChartsheet>::value)
+        //            return std::get<XLChartsheet>(m_sheet);
+        //    }
 
-            catch (const std::bad_variant_access&) {
-                throw XLSheetError("XLSheet object does not contain the requested sheet type.");
-            }
-        }
+        //    catch (const std::bad_variant_access&) {
+        //        throw XLSheetError("XLSheet object does not contain the requested sheet type.");
+        //    }
+        //}
 
         /**
          * @brief
@@ -727,9 +727,13 @@ namespace OpenXLSX
         //----------------------------------------------------------------------------------------------------------------------
         //           Private Member Variables
         //----------------------------------------------------------------------------------------------------------------------
-
+    public:
+        XLWorksheet& getWorkSheet() { return m_sheet_WorkSheet; }
+        XLChartsheet& getChartsheet() { return m_sheet_ChartSheet; }
     private:
-        std::variant<XLWorksheet, XLChartsheet> m_sheet; /**<  */
+        XLContentType sheet_type;
+        XLWorksheet m_sheet_WorkSheet; /**<  */
+        XLChartsheet m_sheet_ChartSheet; /**<  */
     };
 }    // namespace OpenXLSX
 

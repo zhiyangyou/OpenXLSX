@@ -116,13 +116,13 @@ namespace OpenXLSX
             // ===== If the argument is a bool, set the m_type attribute to Boolean.
             if constexpr (std::is_integral_v<T> && std::is_same_v<T, bool>) {
                 m_type  = XLValueType::Boolean;
-                m_value = value;
+                m_value_bool = value;
             }
 
             // ===== If the argument is an integral type, set the m_type attribute to Integer.
             else if constexpr (std::is_integral_v<T> && !std::is_same_v<T, bool>) {
                 m_type  = XLValueType::Integer;
-                m_value = int64_t(value);
+                m_value_int = int64_t(value);
             }
 
             // ===== If the argument is a string type (i.e. is constructable from *char),
@@ -132,13 +132,13 @@ namespace OpenXLSX
                                (std::is_same_v<std::decay_t<T>, char*> && !std::is_same_v<T, bool>))
             {
                 m_type = XLValueType::String;
-                m_value = std::string(value);
+                m_value_str = std::string(value);
             }
 
             // ===== If the argument is an XLDateTime, set the value to the date/time serial number.
             else if constexpr (std::is_same_v<T, XLDateTime>) {
                 m_type  = XLValueType::Float;
-                m_value = value.serial();
+                m_value_float = value.serial();
             }
 
             // ===== If the argument is a floating point type, set the m_type attribute to Float.
@@ -147,11 +147,11 @@ namespace OpenXLSX
                 static_assert(std::is_floating_point_v<T>, "Invalid argument for constructing XLCellValue object");
                 if (std::isfinite(value)) {
                     m_type  = XLValueType::Float;
-                    m_value = double(value);
+                    m_value_float = double(value);
                 }
                 else {
                     m_type = XLValueType::Error;
-                    m_value = std::string("#NUM!");
+                    m_value_error = std::string("#NUM!");
                 }
             }
         }
@@ -237,21 +237,21 @@ namespace OpenXLSX
         T get() const
         {
             try {
-                if constexpr (std::is_integral_v<T> && std::is_same_v<T, bool>) return std::get<bool>(m_value);
+                if constexpr (std::is_integral_v<T> && std::is_same_v<T, bool>) return (m_value_bool);
 
-                if constexpr (std::is_integral_v<T> && !std::is_same_v<T, bool>) return static_cast<T>(std::get<int64_t>(m_value));
+                if constexpr (std::is_integral_v<T> && !std::is_same_v<T, bool>) return static_cast<T>((m_value_int));
 
                 if constexpr (std::is_floating_point_v<T>) {
                     if (m_type == XLValueType::Error) return std::nan("1");
-                    return static_cast<T>(std::get<double>(m_value));
+                    return static_cast<T>((m_value_float));
                 }
 
                 if constexpr (std::is_same_v<std::decay_t<T>, std::string> || std::is_same_v<std::decay_t<T>, std::string_view> ||
                               std::is_same_v<std::decay_t<T>, const char*> ||
                               (std::is_same_v<std::decay_t<T>, char*> && !std::is_same_v<T, bool>))
-                    return std::get<std::string>(m_value).c_str();
+                    return (m_value_str).c_str();
 
-                if constexpr (std::is_same_v<T, XLDateTime>) return XLDateTime(std::get<double>(m_value));
+                if constexpr (std::is_same_v<T, XLDateTime>) return XLDateTime((m_value_float));
             }
 
             catch (const std::bad_variant_access& ) {
@@ -301,8 +301,13 @@ namespace OpenXLSX
 
     private:
         //---------- Private Member Variables ---------- //
-
-        std::variant<std::string, int64_t, double, bool> m_value { std::string("") };                /**< The value contained in the cell. */
+         
+        std::string                                     m_value_str;
+        int64_t                                          m_value_int;
+        double                                          m_value_float;
+        bool                                              m_value_bool;
+        std::string                                      m_value_error;
+        std::string                                      m_value_empty;
         XLValueType                                      m_type { XLValueType::Empty }; /**< The value type of the cell. */
     };
 
@@ -553,7 +558,28 @@ namespace OpenXLSX
      */
     inline bool operator==(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value == rhs.m_value;
+        if (lhs.m_type != rhs.m_type) {
+            return false;
+        }
+        else {
+            switch (lhs.m_type) {
+                case OpenXLSX::XLValueType::Empty:
+                    return true;
+                case OpenXLSX::XLValueType::Error:
+                    return lhs.m_value_error == lhs.m_value_error;
+                case OpenXLSX::XLValueType::Boolean:
+                    return lhs.m_value_bool == lhs.m_value_bool;
+                case OpenXLSX::XLValueType::Integer:
+                    return lhs.m_value_int == lhs.m_value_int;
+                case OpenXLSX::XLValueType::Float:
+                    return lhs.m_value_float == lhs.m_value_float;
+                case OpenXLSX::XLValueType::String:
+                    return lhs.m_value_str == lhs.m_value_str;
+                default:
+                    throw;
+                    break;
+            }
+        }
     }
 
     /**
@@ -564,7 +590,8 @@ namespace OpenXLSX
      */
     inline bool operator!=(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value != rhs.m_value;
+        
+        return !(lhs == rhs);
     }
 
     /**
@@ -575,7 +602,29 @@ namespace OpenXLSX
      */
     inline bool operator<(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value < rhs.m_value;
+        if (lhs.m_type != rhs.m_type) {
+            return false;
+        }
+        else {
+            switch (lhs.m_type) {
+                case XLValueType::Empty:
+                    return false;
+                case XLValueType::Error:
+                    return lhs.m_value_error < lhs.m_value_error;
+                    break;
+                case XLValueType::Boolean:
+                    return lhs.m_value_bool < lhs.m_value_bool;
+                case XLValueType::Integer:
+                    return lhs.m_value_int < lhs.m_value_int;
+                case XLValueType::Float:
+                    return lhs.m_value_float < lhs.m_value_float;
+                case XLValueType::String:
+                    return lhs.m_value_str < lhs.m_value_str;
+                default:
+                    throw;
+                    break;
+            }
+        }
     }
 
     /**
@@ -586,7 +635,29 @@ namespace OpenXLSX
      */
     inline bool operator>(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value > rhs.m_value;
+        if (lhs.m_type != rhs.m_type) {
+            return true;
+        }
+        else {
+            switch (lhs.m_type) {
+                case XLValueType::Empty:
+                    return true;
+                case XLValueType::Error:
+                    return lhs.m_value_error > lhs.m_value_error;
+                case XLValueType::Boolean:
+                    return lhs.m_value_bool > lhs.m_value_bool;
+                case XLValueType::Integer:
+                    return lhs.m_value_int > lhs.m_value_int;
+                case XLValueType::Float:
+                    return lhs.m_value_float > lhs.m_value_float;
+                case XLValueType::String:
+                    return lhs.m_value_str > lhs.m_value_str;
+                default:
+                    throw;
+                    break;
+            }
+        }
+       
     }
 
     /**
@@ -597,7 +668,29 @@ namespace OpenXLSX
      */
     inline bool operator<=(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value <= rhs.m_value;
+        if (lhs.m_type != rhs.m_type) {
+            return false;
+        }
+        else {
+            switch (lhs.m_type) {
+                case XLValueType::Empty:
+                    return false;
+                case XLValueType::Error:
+                    return lhs.m_value_error <= lhs.m_value_error;
+                case XLValueType::Boolean:
+                    return lhs.m_value_bool <= lhs.m_value_bool;
+                case XLValueType::Integer:
+                    return lhs.m_value_int <= lhs.m_value_int;
+                case XLValueType::Float:
+                    return lhs.m_value_float <= lhs.m_value_float;
+                case XLValueType::String:
+                    return lhs.m_value_str <= lhs.m_value_str;
+                default:
+                    throw;
+                    break;
+            }
+        }
+        //return lhs.m_value <= rhs.m_value;
     }
 
     /**
@@ -608,7 +701,29 @@ namespace OpenXLSX
      */
     inline bool operator>=(const XLCellValue& lhs, const XLCellValue& rhs)
     {
-        return lhs.m_value >= rhs.m_value;
+        if (lhs.m_type != rhs.m_type) {
+            return true;
+        }
+        else {
+            switch (lhs.m_type) {
+                case XLValueType::Empty:
+                    return true;
+                case XLValueType::Error:
+                    return lhs.m_value_error >= lhs.m_value_error;
+                case XLValueType::Boolean:
+                    return lhs.m_value_bool >= lhs.m_value_bool;
+                case XLValueType::Integer:
+                    return lhs.m_value_int >= lhs.m_value_int;
+                case XLValueType::Float:
+                    return lhs.m_value_float >= lhs.m_value_float;
+                case XLValueType::String:
+                    return lhs.m_value_str >= lhs.m_value_str;
+                default:
+                    throw;
+                    break;
+            }
+        }
+        //return lhs.m_value >= rhs.m_value;
     }
 
     /**
@@ -663,7 +778,29 @@ namespace std
     {
         std::size_t operator()(const OpenXLSX::XLCellValue& value) const noexcept
         {
-            return std::hash<std::variant<std::string, int64_t, double, bool>> {}(value.m_value);
+            switch (value.m_type) {
+                case OpenXLSX::XLValueType::Empty:
+                    return std::hash<std::string> {}("");
+                    break;
+                case OpenXLSX::XLValueType::Error:
+                    return std::hash<string> {}(value.m_value_error);
+                    break;
+                case OpenXLSX::XLValueType::Boolean:
+                    return std::hash<bool> {}(value.m_value_bool);
+                    break;
+                case OpenXLSX::XLValueType::Integer:
+                    return std::hash<int64_t> {}(value.m_value_int);
+                    break;
+                case OpenXLSX::XLValueType::Float:
+                    return std::hash<double> {}(value.m_value_float);
+                    break;
+                case OpenXLSX::XLValueType::String:
+                    return std::hash<std::string> {}(value.m_value_str);
+                    break;
+                default:
+                    throw;
+                    break;
+            } 
         }
     };
 }    // namespace std
