@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.25/Modules/CheckCXXSourceCompiles.cmake
+I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/Examples/external/nowide/CMakeLists.txt
+I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/Examples/external/nowide/cmake/NowideAddWarnings.cmake

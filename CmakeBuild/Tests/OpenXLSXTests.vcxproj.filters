@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLDocument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLCellRange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLCellReference.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLCellValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLCellValueProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLDateTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLFormula.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLRow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\testXLSheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\Tests\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{C7E32967-F3FA-3E06-8295-3DAF46865D10}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

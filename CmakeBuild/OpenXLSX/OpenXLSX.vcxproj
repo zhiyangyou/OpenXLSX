@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A6CA2425-4E9F-3392-830A-3D688E8E059E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>OpenXLSX</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\output\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenXLSX.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenXLSXd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\output\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenXLSX.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenXLSX</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\output\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">OpenXLSX.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">OpenXLSX</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.dll</TargetExt>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\output\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">OpenXLSX.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">OpenXLSX</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.dll</TargetExt>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/zippy" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/pugixml" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/nowide" /w14242 /w14254 /w14263 /w14265 /w14287 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ConformanceMode>false</ConformanceMode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4289</TreatSpecificWarningsAsErrors>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CHARCONV_ENABLED;CMAKE_INTDIR="Debug";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CHARCONV_ENABLED;CMAKE_INTDIR=\"Debug\";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/Debug/OpenXLSXd.lib</ImportLibrary>
+      <ProgramDataBaseFile>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/Debug/OpenXLSXd.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/zippy" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/pugixml" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/nowide"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR="Release";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR=\"Release\";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/Release/OpenXLSX.lib</ImportLibrary>
+      <ProgramDataBaseFile>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/Release/OpenXLSX.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/zippy" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/pugixml" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/nowide"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR="MinSizeRel";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR=\"MinSizeRel\";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/MinSizeRel/OpenXLSX.lib</ImportLibrary>
+      <ProgramDataBaseFile>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/MinSizeRel/OpenXLSX.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/zippy" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/pugixml" /external:I "I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/external/nowide"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR="RelWithDebInfo";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CHARCONV_ENABLED;CMAKE_INTDIR=\"RelWithDebInfo\";OpenXLSX_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\headers;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\zippy;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\pugixml;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\external\nowide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/RelWithDebInfo/OpenXLSX.lib</ImportLibrary>
+      <ProgramDataBaseFile>I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/output/RelWithDebInfo/OpenXLSX.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX -BI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild --check-stamp-file I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/OpenXLSX/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.25\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\GenerateExportHeader.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\WriteBasicConfigVersionFile.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\exportheader.cmake.in;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\OpenXLSXConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX -BI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild --check-stamp-file I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/OpenXLSX/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.25\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\GenerateExportHeader.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\WriteBasicConfigVersionFile.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\exportheader.cmake.in;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\OpenXLSXConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX -BI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild --check-stamp-file I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/OpenXLSX/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.25\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\GenerateExportHeader.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\WriteBasicConfigVersionFile.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\exportheader.cmake.in;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\OpenXLSXConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/OpenXLSX/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX -BI:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild --check-stamp-file I:/__workSpace/_Github/OpenXLSX-Sharp/OpenXLSX/CmakeBuild/OpenXLSX/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.25\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.25\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\GenerateExportHeader.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\WriteBasicConfigVersionFile.cmake;C:\Program Files\CMake\share\cmake-3.25\Modules\exportheader.cmake.in;I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\OpenXLSXConfig.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\OpenXLSX\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLCell.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLCellIterator.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLCellRange.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLCellReference.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLCellValue.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLColor.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLColumn.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLContentTypes.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLDateTime.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLDocument.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLFormula.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLProperties.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLRelationships.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLRow.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLRowData.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLSharedStrings.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLSheet.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLWorkbook.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLXmlData.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLXmlFile.cpp" />
+    <ClCompile Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\OpenXLSX\sources\XLZipArchive.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="I:\__workSpace\_Github\OpenXLSX-Sharp\OpenXLSX\CmakeBuild\ZERO_CHECK.vcxproj">
+      <Project>{05238318-BF62-3D46-BF42-379909826D53}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
