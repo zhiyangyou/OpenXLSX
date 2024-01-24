@@ -115,13 +115,13 @@ namespace OpenXLSX
         {
             // ===== If the argument is a bool, set the m_type attribute to Boolean.
             if constexpr (std::is_integral_v<T> && std::is_same_v<T, bool>) {
-                m_type  = XLValueType::Boolean;
+                m_type       = XLValueType::Boolean;
                 m_value_bool = value;
             }
 
             // ===== If the argument is an integral type, set the m_type attribute to Integer.
             else if constexpr (std::is_integral_v<T> && !std::is_same_v<T, bool>) {
-                m_type  = XLValueType::Integer;
+                m_type      = XLValueType::Integer;
                 m_value_int = int64_t(value);
             }
 
@@ -131,13 +131,13 @@ namespace OpenXLSX
                                std::is_same_v<std::decay_t<T>, const char*> ||
                                (std::is_same_v<std::decay_t<T>, char*> && !std::is_same_v<T, bool>))
             {
-                m_type = XLValueType::String;
+                m_type      = XLValueType::String;
                 m_value_str = std::string(value);
             }
 
             // ===== If the argument is an XLDateTime, set the value to the date/time serial number.
             else if constexpr (std::is_same_v<T, XLDateTime>) {
-                m_type  = XLValueType::Float;
+                m_type        = XLValueType::Float;
                 m_value_float = value.serial();
             }
 
@@ -146,11 +146,11 @@ namespace OpenXLSX
             else {
                 static_assert(std::is_floating_point_v<T>, "Invalid argument for constructing XLCellValue object");
                 if (std::isfinite(value)) {
-                    m_type  = XLValueType::Float;
+                    m_type        = XLValueType::Float;
                     m_value_float = double(value);
                 }
                 else {
-                    m_type = XLValueType::Error;
+                    m_type        = XLValueType::Error;
                     m_value_error = std::string("#NUM!");
                 }
             }
@@ -254,7 +254,7 @@ namespace OpenXLSX
                 if constexpr (std::is_same_v<T, XLDateTime>) return XLDateTime((m_value_float));
             }
 
-            catch (const std::bad_variant_access& ) {
+            catch (const std::bad_variant_access&) {
                 throw XLValueTypeError("XLCellValue object does not contain the requested type.");
             }
         }
@@ -285,7 +285,7 @@ namespace OpenXLSX
          * @brief Sets the value type to XLValueType::Error.
          * @return Returns a reference to the current object.
          */
-        XLCellValue& setError(const std::string &error);
+        XLCellValue& setError(const std::string& error);
 
         /**
          * @brief Get the value type of the current object.
@@ -301,14 +301,14 @@ namespace OpenXLSX
 
     private:
         //---------- Private Member Variables ---------- //
-         
-        std::string                                     m_value_str;
-        int64_t                                          m_value_int;
-        double                                          m_value_float;
-        bool                                              m_value_bool;
-        std::string                                      m_value_error;
-        std::string                                      m_value_empty;
-        XLValueType                                      m_type { XLValueType::Empty }; /**< The value type of the cell. */
+
+        std::string m_value_str;
+        int64_t     m_value_int;
+        double      m_value_float;
+        bool        m_value_bool;
+        std::string m_value_error;
+        std::string m_value_empty;
+        XLValueType m_type { XLValueType::Empty }; /**< The value type of the cell. */
     };
 
     /**
@@ -444,7 +444,7 @@ namespace OpenXLSX
          * @brief Set the cell value to a error state.
          * @return A reference to the current object.
          */
-        XLCellValueProxy& setError(const std::string & error);
+        XLCellValueProxy& setError(const std::string& error);
 
         /**
          * @brief Get the value type for the cell.
@@ -479,6 +479,37 @@ namespace OpenXLSX
             return getValue().get<T>();
         }
 
+    public:
+        int64_t     getInteger();
+        bool        getBoolean();
+        double      getFloat();
+        std::string getString();
+
+    public:
+        /**
+         * @brief Set cell to an integer value.
+         * @param numberValue The value to be set.
+         */
+        void setInteger(int64_t numberValue);
+
+        /**
+         * @brief Set the cell to a bool value.
+         * @param numberValue The value to be set.
+         */
+        void setBoolean(bool numberValue);
+
+        /**
+         * @brief Set the cell to a floating point value.
+         * @param numberValue The value to be set.
+         */
+        void setFloat(double numberValue);
+
+        /**
+         * @brief Set the cell to a string value.
+         * @param stringValue The value to be set.
+         */
+        void setString(const char* stringValue);
+
     private:
         //---------- Private Member Functions ---------- //
 
@@ -507,30 +538,6 @@ namespace OpenXLSX
          * @return Reference to moved-to pbject.
          */
         XLCellValueProxy& operator=(XLCellValueProxy&& other) noexcept;
-
-        /**
-         * @brief Set cell to an integer value.
-         * @param numberValue The value to be set.
-         */
-        void setInteger(int64_t numberValue);
-
-        /**
-         * @brief Set the cell to a bool value.
-         * @param numberValue The value to be set.
-         */
-        void setBoolean(bool numberValue);
-
-        /**
-         * @brief Set the cell to a floating point value.
-         * @param numberValue The value to be set.
-         */
-        void setFloat(double numberValue);
-
-        /**
-         * @brief Set the cell to a string value.
-         * @param stringValue The value to be set.
-         */
-        void setString(const char* stringValue);
 
         /**
          * @brief Get a copy of the XLCellValue object for the cell.
@@ -588,11 +595,7 @@ namespace OpenXLSX
      * @param rhs
      * @return
      */
-    inline bool operator!=(const XLCellValue& lhs, const XLCellValue& rhs)
-    {
-        
-        return !(lhs == rhs);
-    }
+    inline bool operator!=(const XLCellValue& lhs, const XLCellValue& rhs) { return !(lhs == rhs); }
 
     /**
      * @brief
@@ -657,7 +660,6 @@ namespace OpenXLSX
                     break;
             }
         }
-       
     }
 
     /**
@@ -690,7 +692,7 @@ namespace OpenXLSX
                     break;
             }
         }
-        //return lhs.m_value <= rhs.m_value;
+        // return lhs.m_value <= rhs.m_value;
     }
 
     /**
@@ -723,7 +725,7 @@ namespace OpenXLSX
                     break;
             }
         }
-        //return lhs.m_value >= rhs.m_value;
+        // return lhs.m_value >= rhs.m_value;
     }
 
     /**
@@ -768,13 +770,12 @@ namespace OpenXLSX
         }
     }
 
-
 }    // namespace OpenXLSX
 
 namespace std
 {
     template<>
-    struct hash<OpenXLSX::XLCellValue> // NOLINT
+    struct hash<OpenXLSX::XLCellValue>    // NOLINT
     {
         std::size_t operator()(const OpenXLSX::XLCellValue& value) const noexcept
         {
@@ -800,7 +801,7 @@ namespace std
                 default:
                     throw;
                     break;
-            } 
+            }
         }
     };
 }    // namespace std

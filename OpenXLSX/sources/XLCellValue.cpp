@@ -62,7 +62,7 @@ XLCellValue& OpenXLSX::XLCellValue::operator=(OpenXLSX::XLCellValue&& other) noe
  */
 XLCellValue& XLCellValue::clear()
 {
-    m_type  = XLValueType::Empty;
+    m_type        = XLValueType::Empty;
     m_value_empty = std::string("");
     return *this;
 }
@@ -72,9 +72,9 @@ XLCellValue& XLCellValue::clear()
  * @pre
  * @post
  */
-XLCellValue& XLCellValue::setError(const std::string &error)
+XLCellValue& XLCellValue::setError(const std::string& error)
 {
-    m_type  = XLValueType::Error;
+    m_type        = XLValueType::Error;
     m_value_error = error;
     return *this;
 }
@@ -84,10 +84,7 @@ XLCellValue& XLCellValue::setError(const std::string &error)
  * @pre
  * @post
  */
-XLValueType XLCellValue::type() const
-{
-    return m_type;
-}
+XLValueType XLCellValue::type() const { return m_type; }
 
 /**
  * @details Get the value type of the current object, as a string representation
@@ -119,9 +116,9 @@ std::string XLCellValue::typeAsString() const
  */
 XLCellValueProxy::XLCellValueProxy(XLCell* cell, XMLNode* cellNode) : m_cell(cell), m_cellNode(cellNode)
 {
-    assert(cell);                  // NOLINT
-//    assert(cellNode);              // NOLINT
-//    assert(!cellNode->empty());    // NOLINT
+    assert(cell);    // NOLINT
+    //    assert(cellNode);              // NOLINT
+    //    assert(!cellNode->empty());    // NOLINT
 }
 
 /**
@@ -173,10 +170,7 @@ XLCellValueProxy& XLCellValueProxy::operator=(XLCellValueProxy&& other) noexcept
  * @pre
  * @post
  */
-XLCellValueProxy::operator XLCellValue()
-{
-    return getValue();
-}
+XLCellValueProxy::operator XLCellValue() { return getValue(); }
 
 /**
  * @details Clear the contents of the cell. This removes all children of the cell node.
@@ -205,7 +199,7 @@ XLCellValueProxy& XLCellValueProxy::clear()
  * @pre The m_cellNode must not be null, and must point to a valid XML cell node object.
  * @post The cell node must be valid.
  */
-XLCellValueProxy& XLCellValueProxy::setError(const std::string &error)
+XLCellValueProxy& XLCellValueProxy::setError(const std::string& error)
 {
     // ===== Check that the m_cellNode is valid.
     assert(m_cellNode);              // NOLINT
@@ -257,16 +251,13 @@ XLValueType XLCellValueProxy::type() const
         return XLValueType::String;    // NOLINT
 
     // ===== If the cell is of type "inlineStr", the cell contains an inline string.
-    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "inlineStr") == 0)
-        return XLValueType::String;
+    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "inlineStr") == 0) return XLValueType::String;
 
     // ===== If the cell is of type "str", the cell contains an ordinary string.
-    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "str") == 0)
-        return XLValueType::String;
+    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "str") == 0) return XLValueType::String;
 
     // ===== If the cell is of type "b", the cell contains a boolean.
-    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "b") == 0)
-        return XLValueType::Boolean;
+    if (m_cellNode->attribute("t") != nullptr && strcmp(m_cellNode->attribute("t").value(), "b") == 0) return XLValueType::Boolean;
 
     // ===== Otherwise, the cell contains an error.
     return XLValueType::Error;    // the m_typeAttribute has the ValueAsString "e"
@@ -294,6 +285,11 @@ std::string XLCellValueProxy::typeAsString() const
             return "error";
     }
 }
+
+int64_t     XLCellValueProxy::getInteger() { return this->get<int64_t>(); }
+bool        XLCellValueProxy::getBoolean() { return this->get<bool>(); }
+double      XLCellValueProxy::getFloat() { return this->get<double>(); }
+std::string XLCellValueProxy::getString() { return this->get<std::string>(); }
 
 /**
  * @details Set cell to an integer value. This is private helper function for setting the cell value
@@ -403,7 +399,7 @@ void XLCellValueProxy::setString(const char* stringValue)
 
     // ===== Get or create the index in the XLSharedStrings object.
     auto index = (m_cell->m_sharedStrings.stringExists(stringValue) ? m_cell->m_sharedStrings.getStringIndex(stringValue)
-                                                                     : m_cell->m_sharedStrings.appendString(stringValue));
+                                                                    : m_cell->m_sharedStrings.appendString(stringValue));
 
     // ===== Set the text of the value node.
     m_cellNode->child("v").text().set(index);
@@ -456,7 +452,7 @@ XLCellValue XLCellValueProxy::getValue() const
 
         case XLValueType::Error:
             return XLCellValue().setError(m_cellNode->child("v").text().as_string());
-            
+
         default:
             return XLCellValue().setError("");
     }
