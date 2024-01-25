@@ -101,7 +101,7 @@ namespace OpenXLSX
     {
         std::vector<OpenXLSXCellData> vecCellDatas;
         std::vector<RowPosInfo>       vecRowPosInfos;
-        std::vector<std::string>      vecStrs; 
+        std::vector<std::string*>      vecStrs; 
         int                           rowCount  = 0;
         int                           rowLen    = 0;
         int                           cellTotal = 0;
@@ -128,8 +128,8 @@ namespace OpenXLSX
                         break;
                     case XLValueType::String:
                         //vecStrs.push_back(std::move(cell.get<std::string>()));
-                        vecStrs.emplace_back( cell.get<std::string>()+'\0');
-                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back().c_str());
+                        vecStrs.push_back(new std::string(cell.get<std::string>()));
+                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
                         break;
                     default:
                         break;
@@ -147,6 +147,9 @@ namespace OpenXLSX
                         vecCellDatas.size(),
             static_cast<void*>(vecCellDatas.data())
                 );
+        for (auto* pStr : vecStrs) {
+            delete pStr;
+        }
     }
 
 }    // namespace OpenXLSX
