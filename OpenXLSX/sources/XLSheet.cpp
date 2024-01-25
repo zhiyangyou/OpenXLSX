@@ -53,6 +53,9 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include "XLRelationships.hpp"
 #include "XLSheet.hpp"
 
+#include <codecvt>
+#include <locale>
+
 using namespace OpenXLSX;
 
 namespace OpenXLSX
@@ -101,7 +104,8 @@ namespace OpenXLSX
     {
         std::vector<OpenXLSXCellData> vecCellDatas;
         std::vector<RowPosInfo>       vecRowPosInfos;
-        std::vector<std::string*>      vecStrs; 
+        std::vector<std::wstring*>      vecStrs;
+        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter_u8_wchar;
         int                           rowCount  = 0;
         int                           rowLen    = 0;
         int                           cellTotal = 0;
@@ -126,10 +130,11 @@ namespace OpenXLSX
                     case XLValueType::Float:
                         cellData.Value.floatV = cell.get<double>();
                         break;
-                    case XLValueType::String:
-                        //vecStrs.push_back(std::move(cell.get<std::string>()));
-                        vecStrs.push_back(new std::string(cell.get<std::string>()));
-                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
+                    case XLValueType::String:  
+                        vecStrs.push_back(new std::wstring(converter_u8_wchar.from_bytes(cell.get<std::string>().c_str())));
+                        std::wstring& wstr1    = *vecStrs.back();
+                        //cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
+                        cellData.Value.PU8Str = static_cast<const void*>(wstr1.c_str());
                         break;
                     default:
                         break;
