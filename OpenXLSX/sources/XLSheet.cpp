@@ -97,6 +97,58 @@ namespace OpenXLSX
         return xmlDocument.first_child().child("sheetViews").first_child().attribute("tabSelected").value();
     }
 
+    void XLWorksheet::iterateAllCells(OnReadSheetData onReadSheetData) const
+    {
+        std::vector<OpenXLSXCellData> vecCellDatas;
+        std::vector<RowPosInfo>       vecRowPosInfos;
+        std::vector<std::string>      vecStrs; 
+        int                           rowCount  = 0;
+        int                           rowLen    = 0;
+        int                           cellTotal = 0;
+        for (auto& row : rows()) {
+            const std::vector<XLCellValue> cells(row.values());
+            int                            beginIndex = cellTotal;
+            for (const XLCellValue& cell : cells) {
+                vecCellDatas.push_back({ 0 });
+                auto& cellData     = vecCellDatas.back();
+                auto  type         = cell.type();
+                cellData.ValueType = (int32_t)type;
+                switch (type) {
+                    case XLValueType::Empty:
+                    case XLValueType::Error:
+                        break;
+                    case XLValueType::Boolean:
+                        cellData.Value.boolV = cell.get<bool>();
+                        break;
+                    case XLValueType::Integer:
+                        cellData.Value.IntV = cell.get<int64_t>();
+                        break;
+                    case XLValueType::Float:
+                        cellData.Value.floatV = cell.get<double>();
+                        break;
+                    case XLValueType::String:
+                        //vecStrs.push_back(std::move(cell.get<std::string>()));
+                        vecStrs.emplace_back( cell.get<std::string>()+'\0');
+                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back().c_str());
+                        break;
+                    default:
+                        break;
+                }
+                rowLen++;
+                cellTotal++;
+            }
+            vecRowPosInfos.push_back({ beginIndex, rowLen });
+            rowCount++;
+            rowLen = 0;
+        }
+        onReadSheetData(
+            vecRowPosInfos.size(), 
+            static_cast<void*>(vecRowPosInfos.data()),
+                        vecCellDatas.size(),
+            static_cast<void*>(vecCellDatas.data())
+                );
+    }
+
 }    // namespace OpenXLSX
 
 // ========== XLSheet Member Functions

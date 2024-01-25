@@ -66,6 +66,7 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include "XLException.hpp"
 #include "XLRow.hpp"
 #include "XLXmlFile.hpp"
+#include "ExtensionForSharp.hpp"
 
 namespace OpenXLSX
 {
@@ -447,6 +448,7 @@ namespace OpenXLSX
          */
         void updateSheetName(const std::string& oldName, const std::string& newName);
 
+        void iterateAllCells(OnReadSheetData onReadSheetData) const;
     private:
 
         /**
