@@ -2,18 +2,40 @@
 #include <Windows.h>
 #include <chrono>
 #include <iostream>
+
 using namespace std;
 using namespace OpenXLSX;
 #define curTime std::chrono::high_resolution_clock::now()
 #define deltaTime(a, b) std::chrono::duration_cast<std::chrono::milliseconds>((b) - (a))
+#define needDebugPrintExcel false
+
 void printWorkbook(const XLWorkbook& wb)
 {
     cout << "\nSheets in workbook:\n";
     for (const auto& name : wb.worksheetNames()) cout << wb.indexOfSheet(name) << " : " << name << "\n";
 }
 
+void test8000XLSX2()
+{
+    std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n"
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+
+    auto       t1 = curTime;
+    XLDocument doc;
+    doc.open("G:\\temp\\test1.xlsx");
+    auto wks = doc.workbook().worksheet("testSheet");
+    wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
+        
+    });
+    auto t2 = curTime;
+    auto costTime = deltaTime(t1, t2).count();
+    std::cout << "read full excel cost " << costTime << "ms";
+}
 void test8000XLSX()
 {
+    std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n" 
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+
     auto       t1 = curTime;
     XLDocument doc;
     doc.open("G:\\temp\\test1.xlsx");
@@ -37,45 +59,72 @@ void test8000XLSX()
          });
      }
 #else
+    std::vector<OpenXLSXCellData> vecCellDatas;
+    std::vector<RowPosInfo>       vecRowPosInfos;
+    std::vector<std::string>      vecStrs; 
+    int                           rowCount  = 0;
+    int                           rowLen    = 0;
+    int                           cellTotal = 0;
     for (auto& row : wks.rows()) {
         const std::vector<XLCellValue> cells(row.values());
+        int                            beginIndex = cellTotal;
         for (const XLCellValue& cell : cells) {
-            switch (cell.type()) {
+            vecCellDatas.push_back({0});
+            auto& cellData     = vecCellDatas.back();
+            auto  type         = cell.type();
+            cellData.ValueType = (int32_t)type;
+            switch (type) {
                 case XLValueType::Empty:
+#    if needDebugPrintExcel
                     sb += ("empty");
                     sb += ("|");
-                    countAll += 1;
-                    break;
-                case XLValueType::Boolean:
-                    sb += "bool";
-                    sb += ("|");
-                    countAll += 2;
-                    break;
-                case XLValueType::Integer:
-                    sb += std::to_string(cell.get<int64_t>());
-                    sb += ("|");
-                    countAll += 3;
-                    break;
-                case XLValueType::Float:
-                    sb += std::to_string(cell.get<double>());
-                    sb += ("|");
-                    countAll += 4;
+#    endif
                     break;
                 case XLValueType::Error:
+#    if needDebugPrintExcel
                     sb += ("Error");
                     sb += ("|");
-                    countAll += 5;
+#    endif
+                    break;
+                case XLValueType::Boolean:
+#    if needDebugPrintExcel
+                    sb += "bool";
+                    sb += ("|");
+#    endif
+                    cellData.Value.boolV = cell.get<bool>();
+                    break;
+                case XLValueType::Integer:
+#    if needDebugPrintExcel
+                    sb += std::to_string(cell.get<int64_t>());
+                    sb += ("|");
+#    endif
+                    cellData.Value.IntV = cell.get<int64_t>();
+                    break;
+                case XLValueType::Float:
+#    if needDebugPrintExcel
+                    sb += std::to_string(cell.get<double>());
+                    sb += ("|");
+#    endif
+                    cellData.Value.floatV = cell.get<double>();
                     break;
                 case XLValueType::String:
+#    if needDebugPrintExcel
                     sb += (cell.get<string>());
                     sb += ("|");
-                    countAll += 6;
+#    endif
+                    vecStrs.push_back(std::move(cell.get<string>()));
+                    cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back().c_str());
                     break;
                 default:
                     break;
             }
+            rowLen++;
+            cellTotal++;
         }
         sb += '\n';
+        vecRowPosInfos.push_back({ beginIndex, rowLen });
+        rowCount++;
+        rowLen = 0;
     }
 #endif
 
@@ -121,15 +170,17 @@ void test8000XLSX()
     //                 break;
     //         }
     //     }
-
     //    sb += "\n";
     //}
     doc.close();
     auto t2       = curTime;
     auto costTime = deltaTime(t1, t2).count();
     std::cout << ("excel content\n") << countAll << "\n"
+#if needDebugPrintExcel
               << "content\n"
+
               << sb << "\n"
+#endif
               << "maxRow " << maxRow << "\n"
         //<< "values.size " << rowValues.size() << "\n"
         ;
@@ -138,8 +189,9 @@ void test8000XLSX()
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
-        
-    test8000XLSX();
+
+    //test8000XLSX();
+    test8000XLSX2();
     // cout << "********************************************************************************\n";
     // cout << "DEMO PROGRAM #03: Sheet Handling\n";
     // cout << "********************************************************************************\n";
