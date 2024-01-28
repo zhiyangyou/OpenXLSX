@@ -130,12 +130,13 @@ namespace OpenXLSX
                     case XLValueType::Float:
                         cellData.Value.floatV = cell.get<double>();
                         break;
-                    case XLValueType::String:  
-                        vecStrs.push_back(new std::wstring(converter_u8_wchar.from_bytes(cell.get<std::string>().c_str())));
-                        std::wstring& wstr1    = *vecStrs.back();
-                        //cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
-                        cellData.Value.PU8Str = static_cast<const void*>(wstr1.c_str());
-                        break;
+                    case XLValueType::String: {
+                        std::wstring* wStr = new std::wstring(converter_u8_wchar.from_bytes(cell.get<std::string>().c_str()));
+                        vecStrs.push_back(wStr);
+                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
+                    }
+                     
+                    break;
                     default:
                         break;
                 }
@@ -356,10 +357,15 @@ XLWorksheet::XLWorksheet(XLXmlData* xmlData) : XLSheetBase(xmlData)
     else
         xmlDocument().document_element().child("dimension").set_value(dimensions.substr(dimensions.find(':') + 1).c_str());
 
+    std::vector<std::string> vecNames;
     // If Column properties are grouped, divide them into properties for individual Columns.
-    if (xmlDocument().first_child().child("cols").type() != pugi::node_null) {
+    auto firstChild = xmlDocument().first_child();
+    auto cols       = firstChild.child("cols");
+    if (cols.type() != pugi::node_null) {
         auto currentNode = xmlDocument().first_child().child("cols").first_child();
-        while (currentNode != nullptr) {
+        std::string name        = currentNode.name();
+        vecNames.push_back(name);
+        while (currentNode != nullptr){
             int min = std::stoi(currentNode.attribute("min").value());
             int max = std::stoi(currentNode.attribute("max").value());
             if (min != max) {

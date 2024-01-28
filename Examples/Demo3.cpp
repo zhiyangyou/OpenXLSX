@@ -8,7 +8,8 @@ using namespace OpenXLSX;
 #define curTime std::chrono::high_resolution_clock::now()
 #define deltaTime(a, b) std::chrono::duration_cast<std::chrono::milliseconds>((b) - (a))
 #define needDebugPrintExcel false
-
+#define testFilePath "G:\\temp\\test2.xlsx"
+#define sheetName "testSheet"
 void printWorkbook(const XLWorkbook& wb)
 {
     cout << "\nSheets in workbook:\n";
@@ -22,8 +23,8 @@ void test8000XLSX2()
 
     auto       t1 = curTime;
     XLDocument doc;
-    doc.open("G:\\temp\\test1.xlsx");
-    auto wks = doc.workbook().worksheet("testSheet");
+    doc.open(testFilePath);
+    auto wks = doc.workbook().worksheet(sheetName);
     wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
         
     });
@@ -38,7 +39,7 @@ void test8000XLSX()
 
     auto       t1 = curTime;
     XLDocument doc;
-    doc.open("G:\\temp\\test1.xlsx");
+    doc.open(testFilePath);
     auto        wks = doc.workbook().worksheet("testSheet");
     std::string sb;
     auto        countAll = 0;
@@ -112,8 +113,7 @@ void test8000XLSX()
                     sb += (cell.get<string>());
                     sb += ("|");
 #    endif
-                    vecStrs.push_back(std::move(cell.get<string>()));
-                    cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back().c_str());
+                    vecStrs.push_back(std::move(cell.get<string>())); 
                     break;
                 default:
                     break;
