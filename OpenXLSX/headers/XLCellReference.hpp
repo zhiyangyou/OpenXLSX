@@ -88,6 +88,7 @@ namespace OpenXLSX
          * the default reference will be cell A1.
          */
         XLCellReference(const std::string& cellAddress = ""); // NOLINT
+        XLCellReference(const char* pStr ,int _);                   // NOLINT
 
         /**
          * @brief Constructor taking the cell coordinates as arguments.

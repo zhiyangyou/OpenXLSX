@@ -325,7 +325,8 @@ namespace OpenXLSX
          * @brief Clears all values for the current row.
          */
         void clear();
-
+        
+        void getValuesByFillVector(std::vector<XLCellValue>& vec) const;
     private:
         //---------- Private Member Functions ---------- //
 

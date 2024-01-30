@@ -109,8 +109,12 @@ namespace OpenXLSX
         int                           rowCount  = 0;
         int                           rowLen    = 0;
         int                           cellTotal = 0;
+        std::vector<XLCellValue>                            cells;
         for (auto& row : rows()) {
-            const std::vector<XLCellValue> cells(row.values());
+
+               //const std::vector<XLCellValue> cells = row.values();
+            //const std::vector<XLCellValue> cells(row.values());
+            row.values().getValuesByFillVector(cells);
             int                            beginIndex = cellTotal;
             for (const XLCellValue& cell : cells) {
                 vecCellDatas.push_back({ 0 });

@@ -466,7 +466,6 @@ namespace OpenXLSX
         auto numCells =
             (m_rowNode->last_child() == XMLNode() ? 0 : XLCellReference(m_rowNode->last_child().attribute("r").value()).column());
         std::vector<XLCellValue> result(static_cast<uint64_t>(numCells));
-
         // ===== If there are one or more cells in the current row, iterate through them and add the value to the container.
         if (numCells > 0) {
             for (auto& node : m_rowNode->children())
@@ -528,6 +527,18 @@ namespace OpenXLSX
     void XLRowDataProxy::clear()
     {
         m_rowNode->remove_children();
+    }
+
+    void XLRowDataProxy::getValuesByFillVector(std::vector<XLCellValue>& vec) const
+    {
+        auto numCells =
+            (m_rowNode->last_child() == XMLNode() ? 0 : XLCellReference(m_rowNode->last_child().attribute("r").value()).column());
+        vec.resize(numCells);
+        // ===== If there are one or more cells in the current row, iterate through them and add the value to the container.
+        if (numCells > 0) {
+            for (auto& node : m_rowNode->children())
+                vec[XLCellReference(node.attribute("r").value(),1).column() - 1] = XLCell(node, m_row->m_sharedStrings).value();
+        }
     }
 
 }    // namespace OpenXLSX

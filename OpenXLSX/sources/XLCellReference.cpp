@@ -82,6 +82,17 @@ XLCellReference::XLCellReference(const std::string& cellAddress)
     }
 }
 
+XLCellReference::XLCellReference(const char* pStr /*= ""*/,int _)
+{
+    if ((pStr) && (pStr[0] != '\0')) setAddress(pStr);
+    if (!addressIsValid(m_row, m_column)) {
+        m_row         = 1;
+        m_column      = 1;
+        m_cellAddress = "A1";
+        throw XLCellAddressError("Cell reference is invalid");
+    }
+}
+
 /**
  * @details This constructor creates a new XLCellReference from a given row and column number, e.g. 1,1 (=A1)
  * @todo consider swapping the arguments.
@@ -99,6 +110,8 @@ XLCellReference::XLCellReference(uint32_t row, const std::string& column) {
     if (!addressIsValid(row, columnAsNumber(column))) throw XLCellAddressError("Cell reference is invalid");
     setRowAndColumn(row, columnAsNumber(column));
 }
+
+
 
 /**
  * @details
