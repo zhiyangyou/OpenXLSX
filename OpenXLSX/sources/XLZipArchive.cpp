@@ -129,6 +129,10 @@ std::string OpenXLSX::XLZipArchive::getEntry(const std::string& name)
     return m_archive->GetEntry(name).GetDataAsString();
 }
 
+void OpenXLSX::XLZipArchive::getEntryByFill(const std::string& name, std::string & strForFill) {
+    m_archive->GetEntry(name).GetDataAsString(strForFill);
+}
+
 /**
  * @details
  */

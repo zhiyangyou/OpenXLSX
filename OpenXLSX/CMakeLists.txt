@@ -135,6 +135,7 @@ if (${OPENXLSX_LIBRARY_TYPE} STREQUAL "STATIC")
             $<BUILD_INTERFACE:NoWide>)
 
     target_compile_definitions(OpenXLSX PUBLIC OPENXLSX_STATIC_DEFINE)
+    target_compile_definitions(OpenXLSX PUBLIC MINIZ_DISABLE_ZIP_READER_CRC32_CHECKS)
 
 endif ()
 
@@ -157,6 +158,7 @@ if (${OPENXLSX_LIBRARY_TYPE} STREQUAL "SHARED")
             $<BUILD_INTERFACE:PugiXML>
             $<BUILD_INTERFACE:NoWide>)
 
+    target_compile_definitions(OpenXLSX PUBLIC MINIZ_DISABLE_ZIP_READER_CRC32_CHECKS)
     # Enable Link-Time Optimization (LTO)
     include(CheckIPOSupported)
     check_ipo_supported(RESULT result OUTPUT output)

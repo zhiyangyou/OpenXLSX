@@ -153,6 +153,8 @@ namespace OpenXLSX
          */
         std::string getEntry(const std::string& name);
 
+        void getEntryByFill(const std::string& name, std::string& strForFill);
+
         /**
          * @brief
          * @param entryName

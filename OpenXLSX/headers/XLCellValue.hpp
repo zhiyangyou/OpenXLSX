@@ -259,6 +259,11 @@ namespace OpenXLSX
             }
         }
 
+        inline const char* get_Value_str(int * strLen) const{ 
+            *strLen = m_value_str.size();
+            return m_value_str.c_str();
+        }
+
         /**
          * @brief Explicit conversion operator for easy conversion to supported types.
          * @tparam T The type to cast to.

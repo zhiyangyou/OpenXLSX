@@ -133,8 +133,12 @@ XLContentType XLXmlData::getXmlType() const
  */
 XMLDocument* XLXmlData::getXmlDocument()
 {
-    if (!m_xmlDoc->document_element())
-        m_xmlDoc->load_string(m_parentDoc->extractXmlFromArchive(m_xmlPath).c_str(), pugi::parse_default | pugi::parse_ws_pcdata);
+    std::string strContent;
+    if (!m_xmlDoc->document_element()) {
+        m_parentDoc->extractXmlFromArchive(m_xmlPath, strContent);
+        m_xmlDoc->load_string(strContent.c_str(), pugi::parse_default | pugi::parse_ws_pcdata);
+    }
+        
 
     return m_xmlDoc.get();
 }

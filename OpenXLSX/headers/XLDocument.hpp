@@ -271,6 +271,7 @@ namespace OpenXLSX
          * @return A std::string with the content of the file
          */
         std::string extractXmlFromArchive(const std::string& path);
+        void extractXmlFromArchive(const std::string& path, std::string & strForFill);
 
         /**
          * @brief

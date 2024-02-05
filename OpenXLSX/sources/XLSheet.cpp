@@ -135,9 +135,10 @@ namespace OpenXLSX
                         cellData.Value.floatV = cell.get<double>();
                         break;
                     case XLValueType::String: {
-                        std::wstring* wStr = new std::wstring(converter_u8_wchar.from_bytes(cell.get<std::string>().c_str()));
+                        int           len  = 0;
+                        std::wstring* wStr = new std::wstring(converter_u8_wchar.from_bytes(cell.get_Value_str(&len)));
                         vecStrs.push_back(wStr);
-                        cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back()->c_str());
+                        cellData.Value.PU8Str = static_cast<const void*>(wStr->c_str());
                     }
                      
                     break;

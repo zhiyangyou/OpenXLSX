@@ -1026,3 +1026,8 @@ std::string XLDocument::extractXmlFromArchive(const std::string& path)
 {
     return (m_archive.hasEntry(path) ? m_archive.getEntry(path) : "");
 }
+
+void XLDocument::extractXmlFromArchive(const std::string& path, std::string& strForFill)
+{
+    m_archive.hasEntry(path) ? m_archive.getEntryByFill(path, strForFill) : "";
+}

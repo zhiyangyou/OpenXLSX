@@ -173,6 +173,9 @@ namespace OpenXLSX
             return m_zipArchive->getEntry(name);
         }
 
+        inline void getEntryByFill(const std::string& name, std::string& strForFill) { 
+            m_zipArchive->getEntryByFill(name, strForFill);
+        }
         inline bool hasEntry(const std::string& entryName) {
             return m_zipArchive->hasEntry(entryName);
         }
@@ -237,6 +240,8 @@ namespace OpenXLSX
             inline virtual void deleteEntry(const std::string& entryName) = 0;
 
             inline virtual std::string getEntry(const std::string& name) = 0;
+
+            inline virtual void getEntryByFill(const std::string& name, std::string & strForFill) = 0;
 
             inline virtual bool hasEntry(const std::string& entryName) = 0;
 
@@ -324,8 +329,12 @@ namespace OpenXLSX
                 ZipType.deleteEntry(entryName);
             }
 
-            inline std::string getEntry(const std::string& name) override {
-                return ZipType.getEntry(name);
+            inline void getEntryByFill(const std::string& name, std::string& strForFill) override {
+                ZipType.getEntryByFill(name, strForFill);
+            }
+
+            inline std::string getEntry(const std::string& name) override { 
+                return ZipType.getEntry(name); 
             }
 
             inline bool hasEntry(const std::string& entryName) override {

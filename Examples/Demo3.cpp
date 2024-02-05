@@ -8,7 +8,7 @@ using namespace OpenXLSX;
 #define curTime std::chrono::high_resolution_clock::now()
 #define deltaTime(a, b) std::chrono::duration_cast<std::chrono::milliseconds>((b) - (a))
 #define needDebugPrintExcel false
-#define testFilePath "G:\\temp\\test2.xlsx"
+#define testFilePath "D:\\temp\\test2.xlsx"
 #define sheetName "testSheet"
 void printWorkbook(const XLWorkbook& wb)
 {
@@ -18,32 +18,28 @@ void printWorkbook(const XLWorkbook& wb)
 
 void test8000XLSX2()
 {
+    auto       t1 = curTime;
+    XLDocument doc(testFilePath );
     
-
-    //auto       t1 = curTime;
-    XLDocument doc;
-    doc.open(testFilePath);
     auto wks = doc.workbook().worksheet(sheetName);
     wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
         
     });
-    auto t2 = curTime;
-    //auto costTime = deltaTime(t1, t2).count();
-    //std::cout << "read full excel cost " << costTime << "ms";
-}
+} 
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
-
-    int  forCount = 10;
-    auto t1 = curTime;
+    int  forCount = 20;
+        auto t1 = curTime;
     for (int i = 0; i < forCount; ++i) {
-        test8000XLSX2();
+            test8000XLSX2();
     }
-    auto t2 = curTime;
-    std::cout << "forCount " << forCount << "\n"
-              << "CostTime: " << deltaTime(t1, t2).count();
- 
+    
+    auto t2       = curTime;
+    auto costTime = deltaTime(t1, t2).count();
+    std::cout << "forCount " << forCount << "\nCostTime"  << costTime << "ms\n" << "avageCostTime: "<< costTime/(double)forCount << "ms\n";
+    
+    
     // cout << "********************************************************************************\n";
     // cout << "DEMO PROGRAM #03: Sheet Handling\n";
     // cout << "********************************************************************************\n";

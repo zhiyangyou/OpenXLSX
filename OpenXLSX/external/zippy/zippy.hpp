@@ -9930,6 +9930,18 @@ namespace Zippy
                 return result;
             }
 
+            void GetDataAsString(std::string & strForFill) const
+            {
+                auto newSize =  m_EntryData.size();
+                strForFill.reserve(newSize + 1);
+                strForFill.resize(newSize);
+                memcpy(strForFill.data(), m_EntryData.data(), newSize);
+                *((strForFill.data()) + newSize) = '\0';
+                //for (const auto& ch : m_EntryData) {
+                //    result += static_cast<char>(ch);
+                //}    // TODO: Should this use reinterpret_cast instead?                 
+            }
+
             /**
              * @brief Set the data for the entry.
              * @param data A std::string with the file data.
@@ -10201,6 +10213,11 @@ namespace Zippy
         std::string GetDataAsString() const
         {
             return m_ZipEntry->GetDataAsString();
+        }
+
+        void GetDataAsString(std::string & strForFill) const
+        { 
+            m_ZipEntry->GetDataAsString(strForFill);
         }
 
         /**
