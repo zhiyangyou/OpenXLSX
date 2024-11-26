@@ -57,7 +57,6 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include <cstdint>
 #include <iostream>
 #include <string>
-#include <variant>
 
 // ===== OpenXLSX Includes ===== //
 #include "OpenXLSX-Exports.hpp"
@@ -271,7 +270,7 @@ namespace OpenXLSX
                 if constexpr (std::is_same_v<T, XLDateTime>) return XLDateTime(m_value_double);
             }
 
-            catch (const std::bad_variant_access&) {
+            catch (const std::exception&) {
                 throw XLValueTypeError("XLCellValue object does not contain the requested type.");
             }
         }

@@ -56,7 +56,6 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include <cstdint>    // uint8_t, uint16_t, uint32_t
 #include <ostream>    // std::basic_ostream
 #include <type_traits>
-#include <variant>
 
 // ===== OpenXLSX Includes ===== //
 #include "OpenXLSX-Exports.hpp"
@@ -776,13 +775,13 @@ namespace OpenXLSX
          * @brief Method to get the type of the sheet.
          * @return An XLSheetType enum object with the sheet type.
          */
-        template<
-            typename SheetType,
-                 typename = std::enable_if_t<std::is_same_v<SheetType, XLWorksheet> || std::is_same_v<SheetType, XLChartsheet>>>
-        bool isType() const
-        {
-            return std::holds_alternative<SheetType>(m_sheet);
-        }
+        // template<
+        //     typename SheetType,
+        //          typename = std::enable_if_t<std::is_same_v<SheetType, XLWorksheet> || std::is_same_v<SheetType, XLChartsheet>>>
+        // bool isType() const
+        // {
+        //     return std::holds_alternative<SheetType>(m_sheet);
+        // }
 
         /**
          * @brief Method for cloning the sheet.
@@ -802,13 +801,13 @@ namespace OpenXLSX
         {
             try {
                 if constexpr (std::is_same<T, XLWorksheet>::value)
-                    return std::get<XLWorksheet>(m_sheet);
+                    return m_sheet_XL;
 
                 else if constexpr (std::is_same<T, XLChartsheet>::value)
-                    return std::get<XLChartsheet>(m_sheet);
+                    return m_sheet_Chart;
             }
 
-            catch (const std::bad_variant_access&) {
+            catch (const std::exception&) {
                 throw XLSheetError("XLSheet object does not contain the requested sheet type.");
             }
         }
@@ -834,8 +833,13 @@ namespace OpenXLSX
         //           Private Member Variables
         //----------------------------------------------------------------------------------------------------------------------
 
+        
+        XLWorksheet m_sheet_XL;
+        XLChartsheet m_sheet_Chart;
+        XLSheetType m_sheetType;
     private:
-        std::variant<XLWorksheet, XLChartsheet> m_sheet; /**<  */
+        
+        // std::variant<XLWorksheet, XLChartsheet> m_sheet; /**<  */
     };
 }    // namespace OpenXLSX
 

@@ -119,10 +119,14 @@ namespace OpenXLSX
  */
 XLSheet::XLSheet(XLXmlData* xmlData) : XLXmlFile(xmlData)
 {
-    if (xmlData->getXmlType() == XLContentType::Worksheet)
-        m_sheet = XLWorksheet(xmlData);
-    else if (xmlData->getXmlType() == XLContentType::Chartsheet)
-        m_sheet = XLChartsheet(xmlData);
+    if (xmlData->getXmlType() == XLContentType::Worksheet) {
+        m_sheetType = XLSheetType::Worksheet;
+        m_sheet_XL = XLWorksheet(xmlData);
+    }
+    else if (xmlData->getXmlType() == XLContentType::Chartsheet) {
+        m_sheetType = XLSheetType::Chartsheet;
+        m_sheet_Chart = XLChartsheet(xmlData);
+    }
     else
         throw XLInternalError("Invalid XML data.");
 }
@@ -133,7 +137,14 @@ XLSheet::XLSheet(XLXmlData* xmlData) : XLXmlFile(xmlData)
  */
 std::string XLSheet::name() const
 {
-    return std::visit([](auto&& arg) { return arg.name(); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        return m_sheet_Chart.name();
+    }else if (m_sheetType == XLSheetType::Worksheet) {
+        return m_sheet_XL.name();
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // return std::visit([](auto&& arg) { return arg.name(); }, m_sheet);
 }
 
 /**
@@ -142,7 +153,14 @@ std::string XLSheet::name() const
  */
 void XLSheet::setName(const std::string& name)
 {
-    std::visit([&](auto&& arg) { return arg.setName(name); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.setName(name);
+    }else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.setName(name);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { return arg.setName(name); }, m_sheet);
 }
 
 /**
@@ -151,7 +169,15 @@ void XLSheet::setName(const std::string& name)
  */
 XLSheetState XLSheet::visibility() const
 {
-    return std::visit([](auto&& arg) { return arg.visibility(); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        return m_sheet_Chart.visibility();
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        return m_sheet_XL.visibility();
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // return std::visit([](auto&& arg) { return arg.visibility(); }, m_sheet);
 }
 
 /**
@@ -160,7 +186,15 @@ XLSheetState XLSheet::visibility() const
  */
 void XLSheet::setVisibility(XLSheetState state)
 {
-    std::visit([&](auto&& arg) { return arg.setVisibility(state); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.setVisibility(state);
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.setVisibility(state);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { return arg.setVisibility(state); }, m_sheet);
 }
 
 /**
@@ -169,7 +203,15 @@ void XLSheet::setVisibility(XLSheetState state)
  */
 XLColor XLSheet::color() const
 {
-    return std::visit([](auto&& arg) { return arg.color(); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        return m_sheet_Chart.color();
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        return m_sheet_XL.color();
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // return std::visit([](auto&& arg) { return arg.color(); }, m_sheet);
 }
 
 /**
@@ -178,7 +220,15 @@ XLColor XLSheet::color() const
  */
 void XLSheet::setColor(const XLColor& color)
 {
-    std::visit([&](auto&& arg) { return arg.setColor(color); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.setColor(color);
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.setColor(color);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { return arg.setColor(color); }, m_sheet);
 }
 
 /**
@@ -187,7 +237,15 @@ void XLSheet::setColor(const XLColor& color)
  */
 bool XLSheet::isSelected() const
 {
-    return std::visit([](auto&& arg) { return arg.isSelected(); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        return m_sheet_Chart.isSelected();
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        return m_sheet_XL.isSelected();
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // return std::visit([](auto&& arg) { return arg.isSelected(); }, m_sheet);
 }
 
 /**
@@ -196,7 +254,15 @@ bool XLSheet::isSelected() const
  */
 void XLSheet::setSelected(bool selected)
 {
-    std::visit([&](auto&& arg) { return arg.setSelected(selected); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.setSelected(selected);
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.setSelected(selected);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { return arg.setSelected(selected); }, m_sheet);
 }
 
 /**
@@ -205,7 +271,15 @@ void XLSheet::setSelected(bool selected)
  */
 void XLSheet::clone(const std::string& newName)
 {
-    std::visit([&](auto&& arg) { arg.clone(newName); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.clone(newName);
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.clone(newName);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { arg.clone(newName); }, m_sheet);
 }
 
 /**
@@ -214,7 +288,15 @@ void XLSheet::clone(const std::string& newName)
  */
 uint16_t XLSheet::index() const
 {
-    return std::visit([](auto&& arg) { return arg.index(); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        return m_sheet_Chart.index();
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        return m_sheet_XL.index();
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // return std::visit([](auto&& arg) { return arg.index(); }, m_sheet);
 }
 
 /**
@@ -223,7 +305,15 @@ uint16_t XLSheet::index() const
  */
 void XLSheet::setIndex(uint16_t index)
 {
-    std::visit([&](auto&& arg) { arg.setIndex(index); }, m_sheet);
+    if (m_sheetType == XLSheetType::Chartsheet) {
+        m_sheet_Chart.setIndex(index);
+    }
+    else if (m_sheetType == XLSheetType::Worksheet) {
+        m_sheet_XL.setIndex(index);
+    }else {
+        throw std::exception("error sheet type");
+    }
+    // std::visit([&](auto&& arg) { arg.setIndex(index); }, m_sheet);
 }
 
 /**

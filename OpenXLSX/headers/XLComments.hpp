@@ -50,7 +50,6 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include <cstdint>    // uint8_t, uint16_t, uint32_t
 #include <ostream>    // std::basic_ostream
 // #include <type_traits>
-// #include <variant>
 
 // ===== OpenXLSX Includes ===== //
 #include "OpenXLSX-Exports.hpp"
