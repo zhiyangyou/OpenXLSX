@@ -50,10 +50,10 @@ TEST_CASE("XLCell Tests", "[XLCell]")
         XLDocument doc;
         doc.create("./testXLCell.xlsx");
         XLWorksheet wks = doc.workbook().sheet(1);
-        auto cell = wks.cell("A1");
+        XLCellAssignable cell = wks.cell("A1");
         cell.value() = 42;
 
-        auto copy = cell;
+        XLCellAssignable copy = cell;
 
         REQUIRE(copy);
         REQUIRE(copy.cellReference().address() == "A1");

@@ -240,6 +240,12 @@ XLCellAssignable::XLCellAssignable (XLCell const & other) : XLCell(other) {}
  */
 XLCellAssignable::XLCellAssignable (XLCell && other) : XLCell(std::move(other)) {}
 
+XLCellAssignable::XLCellAssignable (XLCellAssignable const & other)
+{
+    copyFrom(other);
+    // return *this;
+}
+
 /**
  * @details
  */

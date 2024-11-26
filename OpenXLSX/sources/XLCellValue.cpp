@@ -65,7 +65,7 @@ XLCellValue& OpenXLSX::XLCellValue::operator=(OpenXLSX::XLCellValue&& other) noe
 XLCellValue& XLCellValue::clear()
 {
     m_type  = XLValueType::Empty;
-    m_value = std::string("");
+    m_value_str = std::string("");
     return *this;
 }
 
@@ -77,7 +77,7 @@ XLCellValue& XLCellValue::clear()
 XLCellValue& XLCellValue::setError(const std::string &error)
 {
     m_type  = XLValueType::Error;
-    m_value = error;
+    m_value_str = error;
     return *this;
 }
 
