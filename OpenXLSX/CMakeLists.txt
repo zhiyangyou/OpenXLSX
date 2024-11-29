@@ -31,7 +31,7 @@ set(IGNORE_ME ${CMAKE_C_COMPILER}) # Suppress CMake warning message
 # Add build options
 #=======================================================================================================================
 option(OPENXLSX_COMPACT_MODE "Build library in compact mode (slower, but uses less memory)" OFF)
-set(OPENXLSX_LIBRARY_TYPE "STATIC" CACHE STRING "Set the library type to SHARED or STATIC")
+set(OPENXLSX_LIBRARY_TYPE "SHARED" CACHE STRING "Set the library type to SHARED or STATIC")
 
 #=======================================================================================================================
 # EXTERNAL LIBRARIES
@@ -113,6 +113,7 @@ set(OPENXLSX_SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLXmlFile.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLXmlParser.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLZipArchive.cpp
+		${CMAKE_CURRENT_LIST_DIR}/sources/ExtensionForSharp.cpp
         )
 
 
@@ -225,6 +226,7 @@ list(APPEND OPENXLSX_DEBUG_FLAGS_GNUCLANG
         "-Weffc++"
         "-Wno-unknown-pragmas")
 list(APPEND OPENXLSX_DEBUG_FLAGS_MSVC
+        "/MP"
         "/permissive-"
         "/W4"
         "/w14242"
@@ -249,6 +251,7 @@ list(APPEND OPENXLSX_DEBUG_FLAGS_MSVC
         "/wd4251"
         "/wd4275")
 list(APPEND OPENXLSX_RELEASE_FLAGS_MSVC
+        "/MP"
         "/permissive-"
         "/wd4251"
         "/wd4275")

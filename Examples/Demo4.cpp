@@ -1,74 +1,204 @@
 #include <OpenXLSX.hpp>
+#include <Windows.h>
+#include <chrono>
+#include <iostream>
 
-#ifdef ENABLE_NOWIDE
-    #include <nowide/iostream.hpp>
-    using nowide::cout;
+using namespace std;
+using namespace OpenXLSX;
+#define curTime std::chrono::high_resolution_clock::now()
+#define deltaTime(a, b) std::chrono::duration_cast<std::chrono::milliseconds>((b) - (a))
+#define needDebugPrintExcel true
+
+void printWorkbook(const XLWorkbook& wb)
+{
+    cout << "\nSheets in workbook:\n";
+    for (const auto& name : wb.worksheetNames()) cout << wb.indexOfSheet(name) << " : " << name << "\n";
+}
+
+void test8000XLSX2()
+{
+    std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n"
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+
+    auto       t1 = curTime;
+    XLDocument doc;
+    doc.open("F:\\temp\\test2.xlsx");
+    auto wks = doc.workbook().worksheet("testSheet");
+    wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
+        std::cout
+        << "rowInfoCount " << rowInfoCount <<"\n"
+        << "rowInfos " << rowInfos <<"\n"
+        << "cellTotalCount " << cellTotalCount <<"\n"
+        << "CellsData " << CellsData <<"\n"
+
+        ;
+    });
+    auto t2 = curTime;
+    auto costTime = deltaTime(t1, t2).count();
+    std::cout << "read full excel cost " << costTime << "ms";
+}
+void test8000XLSX()
+{
+    std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n" 
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+
+    auto       t1 = curTime;
+    XLDocument doc;
+    doc.open("G:\\temp\\test1.xlsx");
+    auto        wks = doc.workbook().worksheet("testSheet");
+    std::string sb;
+    auto        countAll = 0;
+    auto        maxRow   = wks.lastCell().row();
+    auto        maxCol   = wks.lastCell().column();
+
+    auto     strCount = 0;
+    uint64_t result   = 0;
+
+#if false
+     std::vector<std::string> values;
+     for (auto& row : wks.rows()) {
+         values = std::vector<std::string>(row.values());
+         result += std::count_if(values.begin(), values.end(), [&strCount, &sb](const std::string& v) {
+             strCount++;
+             sb += v;
+             return !v.empty();
+         });
+     }
 #else
-    #include <iostream>
-    using std::cout;
+    std::vector<OpenXLSXCellData> vecCellDatas;
+    std::vector<RowPosInfo>       vecRowPosInfos;
+    std::vector<std::string>      vecStrs; 
+    int                           rowCount  = 0;
+    int                           rowLen    = 0;
+    int                           cellTotal = 0;
+    for (auto& row : wks.rows()) {
+        const std::vector<XLCellValue> cells(row.values());
+        int                            beginIndex = cellTotal;
+        for (const XLCellValue& cell : cells) {
+            vecCellDatas.push_back({0});
+            auto& cellData     = vecCellDatas.back();
+            auto  type         = cell.type();
+            cellData.ValueType = (int32_t)type;
+            switch (type) {
+                case XLValueType::Empty:
+#    if needDebugPrintExcel
+                    sb += ("empty");
+                    sb += ("|");
+#    endif
+                    break;
+                case XLValueType::Error:
+#    if needDebugPrintExcel
+                    sb += ("Error");
+                    sb += ("|");
+#    endif
+                    break;
+                case XLValueType::Boolean:
+#    if needDebugPrintExcel
+                    sb += "bool";
+                    sb += ("|");
+#    endif
+                    cellData.Value.boolV = cell.get<bool>();
+                    break;
+                case XLValueType::Integer:
+#    if needDebugPrintExcel
+                    sb += std::to_string(cell.get<int64_t>());
+                    sb += ("|");
+#    endif
+                    cellData.Value.IntV = cell.get<int64_t>();
+                    break;
+                case XLValueType::Float:
+#    if needDebugPrintExcel
+                    sb += std::to_string(cell.get<double>());
+                    sb += ("|");
+#    endif
+                    cellData.Value.floatV = cell.get<double>();
+                    break;
+                case XLValueType::String:
+#    if needDebugPrintExcel
+                    sb += (cell.get<string>());
+                    sb += ("|");
+#    endif
+                    vecStrs.push_back(std::move(cell.get<string>()));
+                    cellData.Value.PU8Str = static_cast<const void*>(vecStrs.back().c_str());
+                    break;
+                default:
+                    break;
+            }
+            rowLen++;
+            cellTotal++;
+        }
+        sb += '\n';
+        vecRowPosInfos.push_back({ beginIndex, rowLen });
+        rowCount++;
+        rowLen = 0;
+    }
 #endif
 
-using namespace OpenXLSX;
+    // for (uint32_t row = 1; row < maxRow; row++) {
+    //     auto cellCount = maxCol;
+    //     auto count     = cellCount > 12 ? 12 : cellCount;
+    //     for (unsigned short col = 1; col <= count; col++) {
+    //         //auto cell = wks.cell(XLCellReference(row, col)).value() = 1;
+    //
+    //         //auto cell = wks.cell(row, col);
+    //          switch (wks.cell(row, col).value().type()) {
+    //             case XLValueType::Empty:
+    //                 sb += ("empty");
+    //                 sb += ("|");
+    //                 countAll += 1;
+    //                 break;
+    //             case XLValueType::Boolean:
+    //                 sb +=  "bool";
+    //                 sb += ("|");
+    //                 countAll += 2;
+    //                 break;
+    //             case XLValueType::Integer:
+    //                 sb += std::to_string(wks.cell(1, 2).value().get<int64_t>());
+    //                 sb += ("|");
+    //                 countAll += 3;
+    //                 break;
+    //             case XLValueType::Float:
+    //                 sb += wks.cell(1, 2).value().get<double>();
+    //                 sb += ("|");
+    //                 countAll += 4;
+    //                 break;
+    //             case XLValueType::Error:
+    //                 sb += ("Error");
+    //                 sb += ("|");
+    //                 countAll += 5;
+    //                 break;
+    //             case XLValueType::String:
+    //                 sb += (wks.cell(1, 2).value().get<string>());
+    //                 sb += ("|");
+    //                 countAll += 6;
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    //    sb += "\n";
+    //}
+    doc.close();
+    auto t2       = curTime;
+    auto costTime = deltaTime(t1, t2).count();
+    std::cout << ("excel content\n") << countAll << "\n"
+#if needDebugPrintExcel
+              << "content\n"
 
+              << sb << "\n"
+#endif
+              << "maxRow " << maxRow << "\n"
+        //<< "values.size " << rowValues.size() << "\n"
+        ;
+    std::cout << "read full excel cost " << costTime << "ms";
+}
 int main()
 {
-    cout << "********************************************************************************\n";
-    cout << "DEMO PROGRAM #04: Unicode\n";
-    cout << "********************************************************************************\n";
+    SetConsoleOutputCP(CP_UTF8);
 
-    // Unicode can be a real pain in the neck. While UTF-8 encoding has become the de facto standard
-    // encoding on Linux, macOS and the internet, some systems use other encodings, most notably
-    // Windows which use UTF-16.
-    // OpenXLSX is based on UTF-8. That means that all text input and output MUST be in UTF-8 format.
-    // On Linux and MacOS, this will work out of the box because UTF-8 is baked into those systems.
-    // On Windows, on the other hand, input and output must be converted to UTF-8 first. This includes
-    // input strings that are hard-coded into your program. To stay sane, it is recommended that
-    // all your source code files are in UTF-8 encoding. All major compilers and IDEs on windows
-    // support UTF-8 encoded source files.
-    // To convert input/output manually, you can use the Windows API, or 3rd party libraries, such
-    // as Boost.NoWide.
-    // In this example Boost.NoWide is used, as it provides some handy functionality that enables
-    // console input/output with implicit conversion to/from UTF-8 on Windows.
-
-    // First, create a new document and access the sheet named 'Sheet1'.
-    // Then rename the worksheet to 'Простыня'.
-    XLDocument doc1;
-    doc1.create("./Demo04.xlsx", XLForceOverwrite);
-    auto wks1 = doc1.workbook().worksheet("Sheet1");
-    wks1.setName("Простыня");
-
-    // Cell values can be set to any Unicode string using the normal value assignment methods.
-    wks1.cell(XLCellReference("A1")).value() = "안녕하세요 세계!";
-    wks1.cell(XLCellReference("A2")).value() = "你好，世界!";
-    wks1.cell(XLCellReference("A3")).value() = "こんにちは 世界";
-    wks1.cell(XLCellReference("A4")).value() = "नमस्ते दुनिया!";
-    wks1.cell(XLCellReference("A5")).value() = "Привет, мир!";
-    wks1.cell(XLCellReference("A6")).value() = "Γειά σου Κόσμε!";
-
-    // Workbooks can also be saved and loaded with Unicode names
-    doc1.save();
-    doc1.saveAs("./スプレッドシート.xlsx", XLForceOverwrite);
-    doc1.close();
-
-    doc1.open("./スプレッドシート.xlsx");
-    wks1 = doc1.workbook().worksheet("Простыня");
-
-    // The nowide::cout object is a drop-in replacement of the std::cout that enables console output of UTF-8, even on Windows.
-    cout << "Cell A1 (Korean)  : " << wks1.cell(XLCellReference("A1")).value().get<std::string>() << '\n';
-    cout << "Cell A2 (Chinese) : " << wks1.cell(XLCellReference("A2")).value().get<std::string>() << '\n';
-    cout << "Cell A3 (Japanese): " << wks1.cell(XLCellReference("A3")).value().get<std::string>() << '\n';
-    cout << "Cell A4 (Hindi)   : " << wks1.cell(XLCellReference("A4")).value().get<std::string>() << '\n';
-    cout << "Cell A5 (Russian) : " << wks1.cell(XLCellReference("A5")).value().get<std::string>() << '\n';
-    cout << "Cell A6 (Greek)   : " << wks1.cell(XLCellReference("A6")).value().get<std::string>() << '\n';
-
-
-    cout << "\nNOTE: If you are using a Windows terminal, the above output may look like gibberish,\n"
-                    "because the Windows terminal does not support UTF-8 at the moment. To view to output,\n"
-                    "you can use the overloaded 'cout' in the boost::nowide library (as in this sample program).\n"
-                    "This will require a UTF-8 enabled font in the terminal. Lucinda Console supports some\n"
-                    "non-ASCII scripts, such as Cyrillic and Greek. NSimSun supports some asian scripts.\n\n";
-
-    doc1.close();
+    //test8000XLSX();
+    test8000XLSX2();
+ 
 
     return 0;
 }

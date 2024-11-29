@@ -69,6 +69,7 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include "XLMergeCells.hpp"
 #include "XLRow.hpp"
 #include "XLXmlFile.hpp"
+#include "ExtensionForSharp.hpp"
 
 namespace OpenXLSX
 {
@@ -464,6 +465,8 @@ namespace OpenXLSX
          */
         uint32_t rowCount() const noexcept;
 
+       void iterateAllCells(OnReadSheetData onReadSheetData) const;
+     
         /**
          * @brief
          * @param oldName

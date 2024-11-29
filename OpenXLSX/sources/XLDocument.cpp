@@ -423,7 +423,7 @@ namespace
 
 }    // namespace
 
-XLDocument::XLDocument(const IZipArchive& zipArchive) : m_xmlSavingDeclaration{}, m_archive(zipArchive) {}
+XLDocument::XLDocument() : m_xmlSavingDeclaration{}, m_archive(XLZipArchive()) {}
 
 /**
  * @details An alternative constructor, taking a std::string with the path to the .xlsx package as an argument.
