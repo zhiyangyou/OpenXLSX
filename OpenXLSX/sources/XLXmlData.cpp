@@ -165,8 +165,13 @@ XLContentType XLXmlData::getXmlType() const
  */
 XMLDocument* XLXmlData::getXmlDocument()
 {
-    if (!m_xmlDoc->document_element())
-        m_xmlDoc->load_string(m_parentDoc->extractXmlFromArchive(m_xmlPath).c_str(), pugi_parse_settings);
+    if (!m_xmlDoc->document_element()) {
+        //m_xmlDoc->load_string(m_parentDoc->extractXmlFromArchive(m_xmlPath).c_str(), pugi_parse_settings);
+        unsigned int u8Len = 0;
+        const char * pContent  = m_parentDoc->extractXmlFromArchiveRefRawChar(m_xmlPath, &u8Len);
+        m_xmlDoc->load_u8_string(pContent, u8Len, pugi_parse_settings);
+    }
+        
 
     return m_xmlDoc.get();
 }

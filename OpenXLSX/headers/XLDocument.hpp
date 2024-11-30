@@ -324,6 +324,8 @@ namespace OpenXLSX
          */
         std::string extractXmlFromArchive(const std::string& path);
 
+        const char* extractXmlFromArchiveRefRawChar(const std::string& path, unsigned int* u8Len);
+
         /**
          * @brief
          * @param path

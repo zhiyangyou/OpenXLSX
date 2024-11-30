@@ -1082,6 +1082,8 @@ namespace pugi
         // Load document from zero-terminated string. No encoding conversions are applied.
         xml_parse_result load_string(const char_t* contents, unsigned int options = parse_default);
 
+        xml_parse_result load_u8_string(const char_t* contents, unsigned int u8Len, unsigned int options = parse_default);
+
         // Load document from file
         xml_parse_result load_file(const char* path, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
         xml_parse_result load_file(const wchar_t* path, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);

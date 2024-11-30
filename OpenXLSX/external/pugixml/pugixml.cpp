@@ -7395,6 +7395,18 @@ namespace pugi
 		return load_buffer(contents, impl::strlength(contents) * sizeof(char_t), options, encoding);
 	}
 
+	PUGI_IMPL_FN xml_parse_result xml_document::load_u8_string(const char_t* contents, unsigned int u8Len, unsigned int options)
+    {
+            // Force native encoding (skip autodetection)
+#    ifdef PUGIXML_WCHAR_MODE
+            xml_encoding encoding = encoding_wchar;
+#    else
+            xml_encoding encoding    = encoding_utf8;
+#    endif
+
+            return load_buffer(contents, u8Len, options, encoding);
+    }
+
 	PUGI_IMPL_FN xml_parse_result xml_document::load(const char_t* contents, unsigned int options)
 	{
 		return load_string(contents, options);

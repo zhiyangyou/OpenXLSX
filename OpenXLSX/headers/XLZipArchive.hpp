@@ -154,7 +154,9 @@ namespace OpenXLSX
          * @return
          */
         std::string getEntry(const std::string& name) const;
-
+     
+        const char * getEntry(const std::string& name, unsigned int* u8Len);
+       
         /**
          * @brief
          * @param entryName

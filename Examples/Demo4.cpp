@@ -22,7 +22,7 @@ void test8000XLSX2()
 
     auto       t1 = curTime;
     XLDocument doc;
-    doc.open("F:\\temp\\test2.xlsx");
+    doc.open("D:\\temp\\test2.xlsx");
     auto wks = doc.workbook().worksheet("testSheet");
     wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
         std::cout

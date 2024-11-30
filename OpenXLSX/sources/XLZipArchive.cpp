@@ -134,6 +134,11 @@ std::string XLZipArchive::getEntry(const std::string& name) const {
     return m_archive->GetEntry(name).GetDataAsString();
 }
 
+const char * XLZipArchive::getEntry(const std::string& name, unsigned int* u8Len) {
+    auto entry =  m_archive->GetEntry(name);
+    return entry.GetDataRaw(u8Len);
+}
+
 /**
  * @details
  */

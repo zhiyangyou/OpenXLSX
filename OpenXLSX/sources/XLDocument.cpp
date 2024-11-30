@@ -1253,12 +1253,24 @@ std::string XLDocument::extractXmlFromArchive(const std::string& path)
     return (m_archive.hasEntry(path) ? m_archive.getEntry(path) : "");
 }
 
+const char *  XLDocument::extractXmlFromArchiveRefRawChar(const std::string& path, unsigned int* u8Len)
+{
+    bool hasEntry = m_archive.hasEntry(path);
+    if (!hasEntry) { 
+        *u8Len = 0; 
+        return "";
+    } else { 
+        return m_archive.getEntry(path, u8Len);
+    }
+}
+
 /**
  * @details
  */
 XLXmlData* XLDocument::getXmlData(const std::string& path)
 {
-    if (!hasXmlData(path)) throw XLInternalError("Path " + path + " does not exist in zip archive.");
+    if (!hasXmlData(path)) 
+        throw XLInternalError("Path " + path + " does not exist in zip archive.");
     return &*std::find_if(m_data.begin(), m_data.end(), [&](const XLXmlData& item) { return item.getXmlPath() == path; });
     //    auto result = std::find_if(m_data.begin(), m_data.end(), [&](const XLXmlData& item) { return item.getXmlPath() == path; });
     //    if (result == m_data.end()) throw XLInternalError("Path does not exist in zip archive.");

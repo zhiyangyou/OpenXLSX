@@ -10007,6 +10007,13 @@ namespace Zippy
             {
                 return m_EntryData;
             }
+            
+            const char * GetDataRaw(unsigned int* len)
+            {
+                *len = (unsigned int) (m_EntryData.size());
+                unsigned char * data  = m_EntryData.data();
+                return (const char *) (data);
+            }
 
             /**
              * @brief Get entry data as a std::string.
@@ -10284,6 +10291,10 @@ namespace Zippy
         ZipEntryData GetData() const
         {
             return m_ZipEntry->GetData();
+        }
+        const char* GetDataRaw(unsigned int* len) const
+        {
+            return m_ZipEntry->GetDataRaw(len);
         }
 
         /**
