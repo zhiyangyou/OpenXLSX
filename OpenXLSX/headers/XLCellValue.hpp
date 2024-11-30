@@ -72,6 +72,7 @@ namespace OpenXLSX
     //---------- Forward Declarations ----------//
     class XLCellValueProxy;
     class XLCell;
+    class XLSharedStrings;
 
     /**
      * @brief Enum defining the valid value types for a an Excel spreadsheet cell.
@@ -533,6 +534,9 @@ namespace OpenXLSX
             }
         }
 
+        static XLValueType getType(const XMLNode& xmlNode);
+        static XLCellValue getValue(const XMLNode& xmlNode, XLValueType type, const XLSharedStrings& shared_strings);
+        static const char* getStringValue(const XMLNode& xmlNode, const XLSharedStrings& shared_strings);
     private:
         //---------- Private Member Functions ---------- //
 
@@ -591,6 +595,7 @@ namespace OpenXLSX
          * @return An XLCellValue object.
          */
         XLCellValue getValue() const;
+       
 
         //---------- Private Member Variables ---------- //
 

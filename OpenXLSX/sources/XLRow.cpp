@@ -240,6 +240,11 @@ namespace OpenXLSX
      */
     XLRowDataProxy& XLRow::values() { return m_rowDataProxy; }
 
+    void XLRow::values(std::vector<CellRawData>& vecForFill)
+    {
+        m_rowDataProxy.iterateValues(vecForFill);
+    }
+
     /**
      * @details
      * @pre

@@ -357,16 +357,21 @@ uint16_t XLCellReference::columnAsNumber(const std::string& column)
     */
 }
 
-/**
- * @details Helper method for calculating the coordinates from the cell address.
- * @throws XLInputError
- * @note 2024-06-03: added check for valid address
- */
-XLCoordinates XLCellReference::coordinatesFromAddress(const std::string& address)
+XLCoordinates XLCellReference::coordinatesFromAddress2(const char* address)
 {
+    const size_t strLen = strlen(address);
     uint64_t letterCount = 0;
-    uint32_t colNo = 0;
-    for (const auto letter : address) {
+    uint32_t colNo       = 0;
+    //for (const auto letter : address) {
+    //    if (letter >= 'A' && letter <= 'Z') {    // allow only uppercase letters
+    //        ++letterCount;
+    //        colNo = colNo * 26 + (letter - 'A' + 1);
+    //    }
+    //    else
+    //        break;
+    //}
+    for (size_t i = 0; i < strLen; ++i) {
+        const char letter = address[i];
         if (letter >= 'A' && letter <= 'Z') {    // allow only uppercase letters
             ++letterCount;
             colNo = colNo * 26 + (letter - 'A' + 1);
@@ -376,15 +381,15 @@ XLCoordinates XLCellReference::coordinatesFromAddress(const std::string& address
     }
 
     // ===== If address contains between 1 and 3 letters and has at least 1 more character for the row
-    if(colNo > 0 && colNo <= MAX_COLS && address.length() > letterCount) {
-        size_t pos = letterCount;
+    if (colNo > 0 && colNo <= MAX_COLS && strLen > letterCount) {
+        size_t   pos   = letterCount;
         uint64_t rowNo = 0;
-        for (; pos < address.length() && std::isdigit(address[pos]); ++pos) // check digits
+        for (; pos < strLen && std::isdigit(address[pos]); ++pos)    // check digits
             rowNo = rowNo * 10 + (address[pos] - '0');
-        if (pos == address.length() && rowNo <= MAX_ROWS)    // full address was < 4 letters + only digits
+        if (pos == strLen && rowNo <= MAX_ROWS)    // full address was < 4 letters + only digits
             return std::make_pair(rowNo, colNo);
     }
-    throw XLInputError("XLCellReference::coordinatesFromAddress - address \"" + address + "\" is invalid");
+    throw XLInputError("XLCellReference::coordinatesFromAddress - address \"" + std::string(address) + "\" is invalid");
 
     /* 2024-06-19 OBSOLETE CODE
     // auto it = std::find_if(address.begin(), address.end(), ::isdigit);
@@ -393,4 +398,14 @@ XLCoordinates XLCellReference::coordinatesFromAddress(const std::string& address
     //
     // return std::make_pair(rowAsNumber(rowPart), columnAsNumber(columnPart));
     */
+}
+
+/**
+ * @details Helper method for calculating the coordinates from the cell address.
+ * @throws XLInputError
+ * @note 2024-06-03: added check for valid address
+ */
+    XLCoordinates XLCellReference::coordinatesFromAddress(const std::string& address)
+{
+        return coordinatesFromAddress2(address.c_str());
 }

@@ -237,6 +237,42 @@ XLCellValueProxy& XLCellValueProxy::setError(const std::string &error)
     return *this;
 }
 
+XLValueType XLCellValueProxy::getType(const XMLNode& xmlNode)
+{
+    // ===== Check that the m_cellNode is valid.
+    assert(m_cellNode != nullptr);      // NOLINT
+    assert(not xmlNode.empty());    // NOLINT
+
+    // ===== If neither a Type attribute or a getValue node is present, the cell is empty.
+    if (!xmlNode.attribute("t") && !xmlNode.child("v")) return XLValueType::Empty;
+
+    // ===== If a Type attribute is not present, but a value node is, the cell contains a number.
+    if (xmlNode.attribute("t").empty() ||
+        ((strcmp(xmlNode.attribute("t").value(), "n") == 0) && not xmlNode.child("v").empty())) {
+        if (const std::string numberString = xmlNode.child("v").text().get(); numberString.find('.') != std::string::npos ||
+                                                                                  numberString.find("E-") != std::string::npos ||
+                                                                                  numberString.find("e-") != std::string::npos)
+            return XLValueType::Float;
+        return XLValueType::Integer;
+    }
+
+    // ===== If the cell is of type "s", the cell contains a shared string.
+    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "s") == 0)
+        return XLValueType::String;    // NOLINT
+
+    // ===== If the cell is of type "inlineStr", the cell contains an inline string.
+    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "inlineStr") == 0) return XLValueType::String;
+
+    // ===== If the cell is of type "str", the cell contains an ordinary string.
+    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "str") == 0) return XLValueType::String;
+
+    // ===== If the cell is of type "b", the cell contains a boolean.
+    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "b") == 0) return XLValueType::Boolean;
+
+    // ===== Otherwise, the cell contains an error.
+    return XLValueType::Error;    // the m_typeAttribute has the ValueAsString "e"
+}
+
 /**
  * @details Get the value type for the cell.
  * @pre The m_cellNode must not be null, and must point to a valid XML cell node object.
@@ -244,39 +280,7 @@ XLCellValueProxy& XLCellValueProxy::setError(const std::string &error)
  */
 XLValueType XLCellValueProxy::type() const
 {
-    // ===== Check that the m_cellNode is valid.
-    assert(m_cellNode != nullptr);      // NOLINT
-    assert(not m_cellNode->empty());    // NOLINT
-
-    // ===== If neither a Type attribute or a getValue node is present, the cell is empty.
-    if (!m_cellNode->attribute("t") && !m_cellNode->child("v")) return XLValueType::Empty;
-
-    // ===== If a Type attribute is not present, but a value node is, the cell contains a number.
-    if (m_cellNode->attribute("t").empty() || ((strcmp(m_cellNode->attribute("t").value(), "n") == 0) && not m_cellNode->child("v").empty())) {
-        if (const std::string numberString = m_cellNode->child("v").text().get();
-            numberString.find('.') != std::string::npos || numberString.find("E-") != std::string::npos || numberString.find("e-") != std::string::npos)
-            return XLValueType::Float;
-        return XLValueType::Integer;
-    }
-
-    // ===== If the cell is of type "s", the cell contains a shared string.
-    if (not m_cellNode->attribute("t").empty() && strcmp(m_cellNode->attribute("t").value(), "s") == 0)
-        return XLValueType::String;    // NOLINT
-
-    // ===== If the cell is of type "inlineStr", the cell contains an inline string.
-    if (not m_cellNode->attribute("t").empty() && strcmp(m_cellNode->attribute("t").value(), "inlineStr") == 0)
-        return XLValueType::String;
-
-    // ===== If the cell is of type "str", the cell contains an ordinary string.
-    if (not m_cellNode->attribute("t").empty() && strcmp(m_cellNode->attribute("t").value(), "str") == 0)
-        return XLValueType::String;
-
-    // ===== If the cell is of type "b", the cell contains a boolean.
-    if (not m_cellNode->attribute("t").empty() && strcmp(m_cellNode->attribute("t").value(), "b") == 0)
-        return XLValueType::Boolean;
-
-    // ===== Otherwise, the cell contains an error.
-    return XLValueType::Error;    // the m_typeAttribute has the ValueAsString "e"
+    return getType(*m_cellNode);
 }
 
 /**
@@ -442,6 +446,52 @@ void XLCellValueProxy::setString(const char* stringValue) // NOLINT
     //    }
 }
 
+const char *  XLCellValueProxy::getStringValue(const XMLNode& xmlNode, const XLSharedStrings& shared_strings) {
+    if (strcmp(xmlNode.attribute("t").value(), "s") == 0)
+        return  shared_strings.getString(static_cast<uint32_t>(xmlNode.child("v").text().as_ullong())) ;
+    else if (strcmp(xmlNode.attribute("t").value(), "str") == 0)
+        return xmlNode.child("v").text().get() ;
+    else if (strcmp(xmlNode.attribute("t").value(), "inlineStr") == 0)
+        return xmlNode.child("is").child("t").text().get();
+    else
+        throw XLInternalError("Unknown string type");
+}
+XLCellValue XLCellValueProxy::getValue(const XMLNode& xmlNode, XLValueType type, const XLSharedStrings& shared_strings)
+{
+    // ===== Check that the m_cellNode is valid.
+    assert(m_cellNode != nullptr);    // NOLINT
+    assert(not xmlNode.empty());      // NOLINT
+
+    switch (type) {
+        case XLValueType::Empty:
+            return XLCellValue().clear();
+
+        case XLValueType::Float:
+            return XLCellValue { xmlNode.child("v").text().as_double() };
+
+        case XLValueType::Integer:
+            return XLCellValue { xmlNode.child("v").text().as_llong() };
+
+        case XLValueType::String:
+            if (strcmp(xmlNode.attribute("t").value(), "s") == 0)
+                return XLCellValue { shared_strings.getString(static_cast<uint32_t>(xmlNode.child("v").text().as_ullong())) };
+            else if (strcmp(xmlNode.attribute("t").value(), "str") == 0)
+                return XLCellValue { xmlNode.child("v").text().get() };
+            else if (strcmp(xmlNode.attribute("t").value(), "inlineStr") == 0)
+                return XLCellValue { xmlNode.child("is").child("t").text().get() };
+            else
+                throw XLInternalError("Unknown string type");
+
+        case XLValueType::Boolean:
+            return XLCellValue { xmlNode.child("v").text().as_bool() };
+
+        case XLValueType::Error:
+            return XLCellValue().setError(xmlNode.child("v").text().as_string());
+
+        default:
+            return XLCellValue().setError("");
+    }
+}
 /**
  * @details Get a copy of the XLCellValue object for the cell. This is private helper function for returning an
  * XLCellValue object corresponding to the cell value.

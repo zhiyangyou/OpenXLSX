@@ -17,6 +17,7 @@
 #include <list>
 #include <memory>
 #include <vector>
+#include <functional>
 
 // ===== OpenXLSX Includes ===== //
 #include "OpenXLSX-Exports.hpp"
@@ -26,11 +27,27 @@
 #include "XLIterator.hpp"
 #include "XLXmlParser.hpp"
 
+
 // ========== CLASS AND ENUM TYPE DEFINITIONS ========== //
 namespace OpenXLSX
 {
     class XLRow;
     class XLRowDataRange;
+
+    struct CellRawData
+    {
+        XLValueType type;
+        union
+        {
+            bool        value_bool;
+            double      value_double;
+            int64_t    value_int;
+            const char* value_rawStr;
+            //std::string value_rawStr;
+        } CellRawData;
+    };
+
+    // typedef std::function<void(XLValueType, CellRawData)> OnIterateRowCell;
 
     /**
      * @brief This class encapsulates a (non-const) iterator, for iterating over the cells in a row.
@@ -409,6 +426,8 @@ namespace OpenXLSX
          * @return A std::vector of XLCellValues.
          */
         std::vector<XLCellValue> getValues() const;
+
+        void iterateValues(std::vector<CellRawData>& vecForFill) const;
 
         /**
          * @brief Helper function for getting a pointer to the shared strings repository.

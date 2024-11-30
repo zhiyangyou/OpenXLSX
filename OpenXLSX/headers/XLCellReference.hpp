@@ -245,6 +245,7 @@ namespace OpenXLSX
          * @return A std::pair<row, column>
          */
         static XLCoordinates coordinatesFromAddress(const std::string& address);
+        static XLCoordinates coordinatesFromAddress2(const char* address);
 
         //----------------------------------------------------------------------------------------------------------------------
         //           Private Member Variables

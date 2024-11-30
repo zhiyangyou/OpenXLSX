@@ -441,6 +441,65 @@ namespace OpenXLSX
     XLRowDataProxy::operator std::list<XLCellValue>() const { return convertContainer<std::list<XLCellValue>>(); }
 
     /**
+     * \brief 
+     * \param onIterateCells 
+     */
+    void XLRowDataProxy::iterateValues(std::vector<CellRawData>& vecForFill) const
+    {
+        // ===== Determine the number of cells in the current row. Create a std::vector of the same size.
+        const XMLNode  lastElementChild = m_rowNode->last_child_of_type(pugi::node_element);
+        const uint16_t numCells = (lastElementChild.empty() ? 0 : XLCellReference(lastElementChild.attribute("r").value()).column());
+        //std::vector<XLCellValue> result(static_cast<uint64_t>(numCells));
+        vecForFill.clear();
+        for (int i = 0; i < numCells; ++i) {vecForFill.emplace_back( CellRawData {XLValueType::Empty,});}
+        // ===== If there are one or more cells in the current row, iterate through them and add the value to the container.
+        if (numCells > 0) {
+            XMLNode node = lastElementChild;    // avoid unneeded call to first_child_of_type by iterating backwards, vector is random
+                                                // access so it doesn't matter
+            while (not node.empty()) {
+                XLCoordinates coordinates =  XLCellReference::coordinatesFromAddress2(node.attribute("r").value());
+                auto          colIndex    = coordinates.second - 1;    // zero-based
+                // XLCell cell = XLCell(node, m_row->m_sharedStrings);
+                // XLCellValueProxy& cellV       = cell.value();
+                XLValueType       type        = XLCellValueProxy::getType(node);
+                
+                CellRawData iterateData = {type};
+                switch (type) {
+                    case XLValueType::Empty:
+                    case XLValueType::Error:
+                        break;
+                    case XLValueType::Boolean: {
+                        XLCellValue cellV =  XLCellValueProxy::getValue(node, type, m_row->m_sharedStrings);
+                        iterateData.CellRawData.value_bool = cellV.get<bool>();
+                    }
+                        break;
+                    case XLValueType::Integer: {
+                        XLCellValue cellV =  XLCellValueProxy::getValue(node, type, m_row->m_sharedStrings);
+                        iterateData.CellRawData.value_int = cellV.get<int64_t>();
+                    }
+                        break;
+                    case XLValueType::Float: {
+                        XLCellValue cellV =  XLCellValueProxy::getValue(node, type, m_row->m_sharedStrings);
+                        iterateData.CellRawData.value_double = cellV.get<double>();
+                    }
+                        break;
+                    case XLValueType::String:
+                        const char* pStrRaw= XLCellValueProxy::getStringValue(node, m_row->m_sharedStrings);
+                        iterateData.CellRawData.value_rawStr = pStrRaw;
+                        break;
+         /*           default: 
+                        break;*/
+                }
+                vecForFill[colIndex] = iterateData;
+                node = node.previous_sibling_of_type(pugi::node_element);
+            }
+        }
+
+        // ===== Return the resulting container.
+        //return result;
+    }
+
+    /**
      * @details Iterates through the cell values (if any) for the current row, and copies them to an output std::vector of XLCellValues.
      * @pre
      * @post

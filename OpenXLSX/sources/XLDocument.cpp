@@ -562,6 +562,8 @@ void XLDocument::open(const std::string& fileName)
         // ===== Validate si node name.
         using namespace std::literals::string_literals;
         if (node.name() != "si"s) throw XLInputError("xl/sharedStrings.xml sst node name \""s + node.name() + "\" is not \"si\""s);
+        /*if (strcmp(node.name(), "si") != 0)
+            throw XLInputError("xl/sharedStrings.xml sst node name \"" + std::string(node.name()) + "\" is not \"si\"");*/
 
         // ===== 2024-09-01 Refactored code to tolerate a mix of <t> and <r> tags within a shared string entry.
         // This simplifies the loop while not doing any harm (obsolete inner loops for rich text and text elements removed).

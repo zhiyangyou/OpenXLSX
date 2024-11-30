@@ -686,46 +686,50 @@ uint32_t XLWorksheet::rowCount() const noexcept
         xmlDocument().document_element().child("sheetData").last_child_of_type(pugi::node_element).attribute("r").as_ullong());
 }
 
+/**
+     * \brief 
+     * \param onReadSheetData 
+     */
     void XLWorksheet::iterateAllCells(OnReadSheetData onReadSheetData) const
     {
         std::vector<OpenXLSXCellData> vecCellDatas;
         std::vector<RowPosInfo>       vecRowPosInfos;
-        std::vector<std::string*>      vecStrs; 
+        std::vector<std::string*>       vecStrs;
         int                           rowCount  = 0;
         int                           rowLen    = 0;
         int                           cellTotal = 0;
+        std::vector<CellRawData> vecBuffer;
         for (auto& row : rows()) {
-            const std::vector<XLCellValue> cells(row.values());
-            int                            beginIndex = cellTotal;
-            for (const XLCellValue& cell : cells) {
-                vecCellDatas.push_back({ 0 });
+            const int              beginIndex          = cellTotal;
+            row.values(vecBuffer);
+            for (int i = 0; i < vecBuffer.size(); ++i) {
+                CellRawData cell_raw_data = vecBuffer[i];
+                vecCellDatas.push_back({ static_cast<int32_t>(XLValueType::Empty) });
                 auto& cellData     = vecCellDatas.back();
-                auto  type         = cell.type();
-                cellData.ValueType = (int32_t)type;
-                switch (type) {
+                cellData.ValueType = static_cast<int32_t>(cell_raw_data.type);
+                switch (cell_raw_data.type) {
                     case XLValueType::Empty:
                     case XLValueType::Error:
                         break;
                     case XLValueType::Boolean:
-                        cellData.Value.boolV = cell.get<bool>();
-                        break;
+                        cellData.Value.boolV = cell_raw_data.CellRawData.value_bool;
+                    break;
                     case XLValueType::Integer:
-                        cellData.Value.IntV = cell.get<int64_t>();
-                        break;
+                        cellData.Value.IntV = cell_raw_data.CellRawData.value_int;
+                    break;
                     case XLValueType::Float:
-                        cellData.Value.floatV = cell.get<double>();
-                        break;
+                        cellData.Value.floatV = cell_raw_data.CellRawData.value_double;
+                    break;
                     case XLValueType::String:
-                        std::string* new_str = new std::string(cell.get<const char*>());
-                        cellData.Value.PU8Str      = static_cast<const void*>(new_str->c_str());
-                        vecStrs.push_back(new_str);
-                        break;
-              /*      default:
-                        break;*/
+                        cellData.Value.PU8Str = cell_raw_data.CellRawData.value_rawStr;
+                    break;
+                    /*      default:
+                              break;*/
                 }
                 rowLen++;
                 cellTotal++;
-            }
+            } 
+          
             vecRowPosInfos.push_back({ beginIndex, rowLen });
             rowCount++;
             rowLen = 0;
@@ -736,8 +740,9 @@ uint32_t XLWorksheet::rowCount() const noexcept
                         vecCellDatas.size(),
             static_cast<void*>(vecCellDatas.data())
                 );
-        for (int i = 0; i < vecStrs.size(); ++i) {
-            delete vecStrs[i];
+
+        for (auto * pStr : vecStrs) {
+            delete pStr;
         }
     }
 

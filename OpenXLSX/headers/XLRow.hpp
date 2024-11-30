@@ -55,6 +55,7 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 // ===== OpenXLSX Includes ===== //
 #include "OpenXLSX-Exports.hpp"
 #include "XLRowData.hpp"
+#include "functional"
 
 // ========== CLASS AND ENUM TYPE DEFINITIONS ========== //
 namespace OpenXLSX
@@ -175,6 +176,8 @@ namespace OpenXLSX
          * @return
          */
         XLRowDataProxy& values();
+
+        void values(std::vector<CellRawData>& vecForFill);
 
         /**
          * @brief
