@@ -20,16 +20,19 @@ void test8000XLSX2(bool needPrintInfo)
     XLDocument doc;
     doc.suppressWarnings();
     doc.open("F:\\temp\\test2.xlsx");
-    auto                          wks = doc.workbook().worksheet("testSheet");
-    wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
-        // if (needPrintInfo) {
-        //     std::cout
-        //         << "rowInfoCount " << rowInfoCount << "\n"
-        //         << "rowInfos " << rowInfos << "\n"
-        //         << "cellTotalCount " << cellTotalCount << "\n"
-        //         << "CellsData " << CellsData << "\n";
-        // }
-    });
+    for (int i = 0; i < 115; ++i) {
+        auto wks = doc.workbook().worksheet("testSheet");
+        //std::cout << i << wks.name()<<"\n";
+    } 
+    //wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
+    //    // if (needPrintInfo) {
+    //    //     std::cout
+    //    //         << "rowInfoCount " << rowInfoCount << "\n"
+    //    //         << "rowInfos " << rowInfos << "\n"
+    //    //         << "cellTotalCount " << cellTotalCount << "\n"
+    //    //         << "CellsData " << CellsData << "\n";
+    //    // }
+    //});
 }
 
 void test8000XLSX()
@@ -193,7 +196,7 @@ int main()
     SetConsoleOutputCP(CP_UTF8);
     std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n"
         << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
-    const int testCount = 50;
+    const int testCount = 100;
     auto      t1        = curTime;
     for (int i = 0; i < testCount; i++) { test8000XLSX2(false); }
     auto t2       = curTime;

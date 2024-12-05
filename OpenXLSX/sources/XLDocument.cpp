@@ -461,6 +461,7 @@ void XLDocument::suppressWarnings() { m_suppressWarnings = true; }
  */
 void XLDocument::open(const std::string& fileName)
 {
+    init_mimalloc_to_pugi();
     // Check if a document is already open. If yes, close it.
     if (m_archive.isOpen()) close(); // TBD: consider throwing if a file is already open.
     m_filePath = fileName;

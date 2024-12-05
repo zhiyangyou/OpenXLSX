@@ -22,4 +22,6 @@ extern "C"
         int RowCellCount;
     };
 }
+
+void init_mimalloc_to_pugi();
 #pragma pack(pop)

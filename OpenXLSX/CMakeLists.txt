@@ -53,6 +53,13 @@ endif ()
 add_library(PugiXML INTERFACE IMPORTED)
 target_include_directories(PugiXML SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/external/pugixml/>)
 
+add_library(mimalloc INTERFACE IMPORTED)
+target_include_directories(mimalloc SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../mimalloc/include/>)
+
+ 
+
+
+
 if (${OPENXLSX_COMPACT_MODE})
     target_compile_definitions(PugiXML INTERFACE PUGIXML_COMPACT)
 endif ()
@@ -141,6 +148,8 @@ if ("${OPENXLSX_LIBRARY_TYPE}" STREQUAL "STATIC")
     target_link_libraries(OpenXLSX
             PRIVATE
             $<BUILD_INTERFACE:Zippy>
+            $<BUILD_INTERFACE:mimalloc>
+            $<BUILD_INTERFACE:mimalloc_lib>
             $<BUILD_INTERFACE:PugiXML>)
 
     if (OPENXLSX_ENABLE_NOWIDE)
@@ -170,7 +179,10 @@ if ("${OPENXLSX_LIBRARY_TYPE}" STREQUAL "SHARED")
     target_link_libraries(OpenXLSX
             PRIVATE
             $<BUILD_INTERFACE:Zippy>
+            $<BUILD_INTERFACE:mimalloc>
             $<BUILD_INTERFACE:PugiXML>)
+
+    target_link_libraries(OpenXLSX PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../mimalloc/out/msvc-x64/Release/mimalloc-static.lib>)
 
     if (OPENXLSX_ENABLE_NOWIDE)
         target_link_libraries(OpenXLSX
