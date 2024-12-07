@@ -240,7 +240,7 @@ XLCellValueProxy& XLCellValueProxy::setError(const std::string &error)
 XLValueType XLCellValueProxy::getType(const XMLNode& xmlNode)
 {
     // ===== Check that the m_cellNode is valid.
-    assert(m_cellNode != nullptr);      // NOLINT
+    //assert(m_cellNode != nullptr);      // NOLINT
     assert(not xmlNode.empty());    // NOLINT
 
     // ===== If neither a Type attribute or a getValue node is present, the cell is empty.
@@ -459,7 +459,7 @@ const char *  XLCellValueProxy::getStringValue(const XMLNode& xmlNode, const XLS
 XLCellValue XLCellValueProxy::getValue(const XMLNode& xmlNode, XLValueType type, const XLSharedStrings& shared_strings)
 {
     // ===== Check that the m_cellNode is valid.
-    assert(m_cellNode != nullptr);    // NOLINT
+    //assert(m_cellNode != nullptr);    // NOLINT
     assert(not xmlNode.empty());      // NOLINT
 
     switch (type) {
