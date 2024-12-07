@@ -2,7 +2,7 @@
 #include <iostream>
 #include <mimalloc.h>
 #include <pugixml.hpp>
-
+#include <mimalloc-new-delete.h>
 static bool has_set_pugi_mem_func = false;
 
 void init_mimalloc_to_pugi()
