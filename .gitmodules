@@ -1,0 +1,3 @@
+[submodule "OpenXLSX/external/libdeflate"]
+	path = OpenXLSX/external/libdeflate
+	url = ../libdeflate.git

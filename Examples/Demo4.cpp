@@ -1,4 +1,4 @@
-#include <OpenXLSX.hpp>
+﻿#include <OpenXLSX.hpp>
 #include <Windows.h>
 #include <chrono>
 #include <iostream>
@@ -19,7 +19,8 @@ void test8000XLSX2(bool needPrintInfo)
 {
     XLDocument doc;
     doc.suppressWarnings();
-    doc.open("F:\\temp\\test2.xlsx");
+    std::string path = "F:\\temp\\test2.xlsx";
+    doc.open(path);
     for (int i = 0; i < 115; ++i) {
         auto wks = doc.workbook().worksheet("testSheet");
         //std::cout << i << wks.name()<<"\n";

@@ -23,5 +23,5 @@ extern "C"
     };
 }
 
-void init_mimalloc_to_pugi();
+void init_mimalloc_to_pugi();   
 #pragma pack(pop)

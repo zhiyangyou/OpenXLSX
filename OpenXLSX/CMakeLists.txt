@@ -56,9 +56,10 @@ target_include_directories(PugiXML SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CU
 add_library(mimalloc INTERFACE IMPORTED)
 target_include_directories(mimalloc SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../mimalloc/include/>)
 
+# add_library(libdeflate_static INTERFACE IMPORTED)
+# target_include_directories(libdeflate_static SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/external/libdeflate>)
  
-
-
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/external/libdeflate) 
 
 if (${OPENXLSX_COMPACT_MODE})
     target_compile_definitions(PugiXML INTERFACE PUGIXML_COMPACT)
@@ -120,7 +121,8 @@ set(OPENXLSX_SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLXmlFile.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLXmlParser.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/XLZipArchive.cpp
-		${CMAKE_CURRENT_LIST_DIR}/sources/ExtensionForSharp.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/ExtensionForSharp.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/ZYUnZipper.cpp
         )
 
 
@@ -171,19 +173,23 @@ if ("${OPENXLSX_LIBRARY_TYPE}" STREQUAL "SHARED")
     add_library(OpenXLSX SHARED "")
     add_library(OpenXLSX::OpenXLSX ALIAS OpenXLSX)
     target_sources(OpenXLSX PRIVATE ${OPENXLSX_SOURCES})
+    target_include_directories(OpenXLSX PUBLIC  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../mio/single_include/mio>)
     target_include_directories(OpenXLSX
             PUBLIC
             $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/external/libdeflate>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/headers>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)     # For export header
     target_link_libraries(OpenXLSX
             PRIVATE
             $<BUILD_INTERFACE:Zippy>
             $<BUILD_INTERFACE:mimalloc>
+        #     $<BUILD_INTERFACE:libdeflate_static>
             $<BUILD_INTERFACE:PugiXML>)
-
     target_link_libraries(OpenXLSX PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../../mimalloc/out/msvc-x64/Release/mimalloc-static.lib>)
-
+    target_link_libraries(OpenXLSX
+    PRIVATE
+    $<BUILD_INTERFACE:libdeflate_static>)
     if (OPENXLSX_ENABLE_NOWIDE)
         target_link_libraries(OpenXLSX
                 PRIVATE
