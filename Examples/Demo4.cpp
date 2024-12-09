@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <chrono>
 #include <iostream>
+#include <ZYUnZipper.hpp>
 
 using namespace std;
 using namespace OpenXLSX;
@@ -17,10 +18,10 @@ void printWorkbook(const XLWorkbook& wb)
 
 void test8000XLSX2(bool needPrintInfo)
 {
-    XLDocument doc;
-    doc.suppressWarnings();
     std::string path = "F:\\temp\\test2.xlsx";
-    doc.open(path);
+    XLDocument  doc(path, ZYZipArchive());
+    doc.suppressWarnings();
+  
     for (int i = 0; i < 115; ++i) {
         auto wks = doc.workbook().worksheet("testSheet");
         //std::cout << i << wks.name()<<"\n";

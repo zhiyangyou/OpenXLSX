@@ -6,6 +6,9 @@
 //#include <mimalloc-new-delete.h>
 #include <mimalloc.h>
 
+// ===== OpenXLSX Includes ===== //
+#include "XLZipArchive.hpp"
+using namespace OpenXLSX;
 static bool s_has_init_mimalloc_to_libdeflate = false;
 void init_mimalloc_to_libdeflate()
 {
@@ -142,7 +145,7 @@ bool ZYZipArchive::isValid() const
 }
 
 bool ZYZipArchive::isOpen() const
-{
+{ 
 	return _mmapSource->is_open();
 }
 
