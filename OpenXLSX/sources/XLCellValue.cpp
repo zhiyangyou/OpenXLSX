@@ -242,13 +242,12 @@ XLValueType XLCellValueProxy::getType(const XMLNode& xmlNode)
     // ===== Check that the m_cellNode is valid.
     //assert(m_cellNode != nullptr);      // NOLINT
     assert(not xmlNode.empty());    // NOLINT
-
+    pugi::xml_attribute attrT = xmlNode.attribute("t");
     // ===== If neither a Type attribute or a getValue node is present, the cell is empty.
-    if (!xmlNode.attribute("t") && !xmlNode.child("v")) return XLValueType::Empty;
+    if (!attrT && !xmlNode.child("v")) return XLValueType::Empty;
 
     // ===== If a Type attribute is not present, but a value node is, the cell contains a number.
-    if (xmlNode.attribute("t").empty() ||
-        ((strcmp(xmlNode.attribute("t").value(), "n") == 0) && not xmlNode.child("v").empty())) {
+    if (attrT.empty() || ((strcmp(attrT.value(), "n") == 0) && not xmlNode.child("v").empty())) {
         if (const std::string numberString = xmlNode.child("v").text().get(); numberString.find('.') != std::string::npos ||
                                                                                   numberString.find("E-") != std::string::npos ||
                                                                                   numberString.find("e-") != std::string::npos)
@@ -257,17 +256,17 @@ XLValueType XLCellValueProxy::getType(const XMLNode& xmlNode)
     }
 
     // ===== If the cell is of type "s", the cell contains a shared string.
-    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "s") == 0)
+    if (not attrT.empty() && strcmp(attrT.value(), "s") == 0)
         return XLValueType::String;    // NOLINT
 
     // ===== If the cell is of type "inlineStr", the cell contains an inline string.
-    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "inlineStr") == 0) return XLValueType::String;
+    if (not attrT.empty() && strcmp(attrT.value(), "inlineStr") == 0) return XLValueType::String;
 
     // ===== If the cell is of type "str", the cell contains an ordinary string.
-    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "str") == 0) return XLValueType::String;
+    if (not attrT.empty() && strcmp(attrT.value(), "str") == 0) return XLValueType::String;
 
     // ===== If the cell is of type "b", the cell contains a boolean.
-    if (not xmlNode.attribute("t").empty() && strcmp(xmlNode.attribute("t").value(), "b") == 0) return XLValueType::Boolean;
+    if (not attrT.empty() && strcmp(attrT.value(), "b") == 0) return XLValueType::Boolean;
 
     // ===== Otherwise, the cell contains an error.
     return XLValueType::Error;    // the m_typeAttribute has the ValueAsString "e"
