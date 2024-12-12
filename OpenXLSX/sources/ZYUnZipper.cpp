@@ -89,7 +89,8 @@ std::vector<ZipEntry> parse_zip(const char* fileData, size_t fileLen) {
 		entry.compressed_size = cdh->compressed_size;
 		entry.uncompressed_size = cdh->uncompressed_size;
 		entry.local_header_offset = cdh->local_header_offset;
-		entry.file_content_offset = cdh->local_header_offset + sizeof(ZipLocalFileHeader) + cdh->filename_length + cdh->extra_field_length;
+                entry.file_content_offset =
+                    cdh->local_header_offset + sizeof(ZipLocalFileHeader) + lfh->filename_length + lfh->extra_field_length;
 
 		if (entry.uncompressed_size > 0) {
 			entries.emplace_back(entry);
