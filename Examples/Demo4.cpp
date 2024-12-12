@@ -1,8 +1,8 @@
 ﻿#include <OpenXLSX.hpp>
 #include <Windows.h>
+#include <ZYUnZipper.hpp>
 #include <chrono>
 #include <iostream>
-#include <ZYUnZipper.hpp>
 
 using namespace std;
 using namespace OpenXLSX;
@@ -18,29 +18,27 @@ void printWorkbook(const XLWorkbook& wb)
 
 void test8000XLSX2(bool needPrintInfo)
 {
+    //std::string path = "F:\\temp\\err_libdeflate.xlsx";
     std::string path = "F:\\temp\\test2.xlsx";
     XLDocument  doc(path, ZYZipArchive());
     doc.suppressWarnings();
-  
-    for (int i = 0; i < 115; ++i) {
-        auto wks = doc.workbook().worksheet("testSheet");
-        //std::cout << i << wks.name()<<"\n";
-    } 
-    //wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
-    //    // if (needPrintInfo) {
-    //    //     std::cout
-    //    //         << "rowInfoCount " << rowInfoCount << "\n"
-    //    //         << "rowInfos " << rowInfos << "\n"
-    //    //         << "cellTotalCount " << cellTotalCount << "\n"
-    //    //         << "CellsData " << CellsData << "\n";
-    //    // }
-    //});
+
+    auto wks = doc.workbook().worksheet("testSheet");
+    wks.iterateAllCells([](size_t rowInfoCount, void* rowInfos, size_t cellTotalCount, void* CellsData) {
+        // if (needPrintInfo) {
+        //     std::cout
+        //         << "rowInfoCount " << rowInfoCount << "\n"
+        //         << "rowInfos " << rowInfos << "\n"
+        //         << "cellTotalCount " << cellTotalCount << "\n"
+        //         << "CellsData " << CellsData << "\n";
+        // }
+    });
 }
 
 void test8000XLSX()
 {
     std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n"
-        << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
 
     auto       t1 = curTime;
     XLDocument doc;
@@ -183,11 +181,11 @@ void test8000XLSX()
     auto costTime = deltaTime(t1, t2).count();
     std::cout << ("excel content\n") << countAll << "\n"
 #if needDebugPrintExcel
-        << "content\n"
+              << "content\n"
 
-        << sb << "\n"
+              << sb << "\n"
 #endif
-        << "maxRow " << maxRow << "\n"
+              << "maxRow " << maxRow << "\n"
         //<< "values.size " << rowValues.size() << "\n"
         ;
     std::cout << "read full excel cost " << costTime << "ms";
@@ -197,13 +195,15 @@ int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     std::cout << " sizeof(OpenXLSXCellData)" << sizeof(OpenXLSXCellData) << "\n"
-        << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
-    const int testCount = 100;
+              << "RowPosInfo" << sizeof(RowPosInfo) << "\n";
+    const int testCount = 300;
     auto      t1        = curTime;
-    for (int i = 0; i < testCount; i++) { test8000XLSX2(false); }
+    for (int i = 0; i < testCount; i++) {
+        test8000XLSX2(false);
+    }
     auto t2       = curTime;
     auto costTime = deltaTime(t1, t2).count();
-    std::cout << "read full excel cost " << costTime/(float)testCount << "ms";
+    std::cout << "read full excel cost " << costTime / (float)testCount << "ms";
 
     return 0;
 }
