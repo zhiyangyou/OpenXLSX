@@ -125,6 +125,9 @@ namespace OpenXLSX
          */
         explicit XLDocument();
 
+
+        explicit XLDocument(bool useZyUnZipper);
+
         /**
          * @brief Constructor. An alternative constructor, taking the path to the .xlsx file as an argument.
          * @param docPath A std::string with the path to the .xlsx file.

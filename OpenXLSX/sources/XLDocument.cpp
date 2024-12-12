@@ -61,6 +61,7 @@ YM      M9  MM    MM MM       MM    MM   d'  `MM.    MM            MM   d'  `MM.
 #include "XLSheet.hpp"
 #include "XLStyles.hpp"
 #include "utilities/XLUtilities.hpp"
+#include  "ZYUnZipper.hpp"
 
 using namespace OpenXLSX;
 
@@ -424,6 +425,15 @@ namespace
 }    // namespace
 
 XLDocument::XLDocument() : m_xmlSavingDeclaration{}, m_archive(XLZipArchive()) {}
+
+XLDocument::XLDocument(bool useZyUnZipper) : m_xmlSavingDeclaration {}
+{
+    if (useZyUnZipper) {
+        m_archive =  ZYZipArchive() ;
+    }else {
+        m_archive = XLZipArchive();
+    }
+}
 
 /**
  * @details An alternative constructor, taking a std::string with the path to the .xlsx package as an argument.
