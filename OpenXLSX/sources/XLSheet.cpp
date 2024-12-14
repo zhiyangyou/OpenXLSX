@@ -343,12 +343,16 @@ void XLSheet::print(std::basic_ostream<char>& ostr) const { xmlDocument().docume
  */
 XLWorksheet::XLWorksheet(XLXmlData* xmlData) : XLSheetBase(xmlData)
 {
-    // ===== Read the dimensions of the Sheet and set data members accordingly.
-    if (const std::string dimensions = xmlDocument().document_element().child("dimension").attribute("ref").value();
-        dimensions.find(':') == std::string::npos)
+    const char*       pDimensions = xmlDocument().document_element().child("dimension").attribute("ref").value();
+    const char*       firstSubStr = strchr(pDimensions, ':');
+    bool              notContain2    = firstSubStr == nullptr;
+    if (notContain2) {
         xmlDocument().document_element().child("dimension").set_value("A1");
-    else
-        xmlDocument().document_element().child("dimension").set_value(dimensions.substr(dimensions.find(':') + 1).c_str());
+    }
+    else {
+        const char* subStr2 = firstSubStr+1;
+        xmlDocument().document_element().child("dimension").set_value(subStr2);
+    }
 
     // If Column properties are grouped, divide them into properties for individual Columns.
     if (xmlDocument().document_element().child("cols").type() != pugi::node_null) {
